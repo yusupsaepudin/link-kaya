@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lynk - One Link to Share Everything",
-  description: "Create your personalized link hub to share everything you are in one simple link. Perfect for creators, businesses, and professionals.",
+  title: "BioLink Reseller - Marketplace for Bio Link Stores",
+  description: "The ultimate bio-link reseller platform. Build your online store, sell products with markup, and earn commissions.",
 };
 
 export default function RootLayout({

@@ -1,18 +1,35 @@
-import { AdminSidebar } from "@/components/admin/admin-sidebar"
-import { Toaster } from "@/components/ui/sonner"
+"use client"
 
-export default function AdminLayout({
+import { AdminLayout } from "@/components/layouts/admin-layout"
+import { useUserStore } from "@/lib/stores/useUserStore"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { mockUsers } from "@/lib/mock"
+
+export default function AdminRootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <div className="min-h-screen flex">
-      <AdminSidebar />
-      <main className="flex-1 p-6 bg-muted/30">
-        {children}
-      </main>
-      <Toaster />
-    </div>
-  )
+  const router = useRouter()
+  const { currentUser, setUser } = useUserStore()
+
+  useEffect(() => {
+    // For demo: auto-login as a reseller if not logged in
+    if (!currentUser) {
+      const resellerUser = mockUsers.find(u => u.username === 'sarahbeauty')
+      if (resellerUser) {
+        setUser(resellerUser)
+      }
+    } else if (currentUser.role !== 'reseller') {
+      // Redirect if not a reseller
+      router.push('/')
+    }
+  }, [currentUser, setUser, router])
+
+  if (!currentUser || currentUser.role !== 'reseller') {
+    return null // Or loading spinner
+  }
+
+  return <AdminLayout>{children}</AdminLayout>
 }
