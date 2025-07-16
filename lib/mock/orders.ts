@@ -235,3 +235,12 @@ export function getResellerStats(resellerId: string): DashboardStats {
     conversionRate: 0
   }
 }
+
+export function getResellerOrders(resellerId: string): Order[] {
+  return mockOrders.filter(order => order.resellerId === resellerId)
+}
+
+export function getBrandOrders(_brandId: string): Order[] {
+  // For now, return all orders since we don't have brand-specific order filtering
+  return mockOrders
+}

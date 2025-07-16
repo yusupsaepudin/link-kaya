@@ -6,20 +6,21 @@ import { Header } from "@/components/shared/header"
 import { RelatedProducts } from "@/components/features/products/related-products"
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     username: string
     slug: string
-  }
+  }>
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const user = getUserByUsername(params.username)
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { username, slug } = await params
+  const user = getUserByUsername(username)
   
   if (!user || user.role !== 'reseller') {
     notFound()
   }
 
-  const product = getProductBySlug(params.slug)
+  const product = getProductBySlug(slug)
   if (!product) {
     notFound()
   }

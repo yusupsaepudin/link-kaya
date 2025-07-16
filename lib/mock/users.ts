@@ -1,4 +1,4 @@
-import { UserProfile, ResellerProduct } from '@/types'
+import { UserProfile, ResellerProduct, Product } from '@/types'
 import { mockProducts } from './products'
 
 export const mockUsers: UserProfile[] = [
@@ -236,4 +236,17 @@ export function getUserByUsername(username: string): UserProfile | undefined {
 
 export function getResellerProducts(resellerId: string): ResellerProduct[] {
   return mockResellerProducts.filter(rp => rp.resellerId === resellerId)
+}
+
+export function getUserByEmail(email: string): UserProfile | undefined {
+  return mockUsers.find(user => user.email === email)
+}
+
+export function getAllResellers(): UserProfile[] {
+  return mockUsers.filter(user => user.role === 'reseller')
+}
+
+export function getBrandProducts(_brandId: string): Product[] {
+  // This would normally return brand products, but we'll use mock products for now
+  return []
 }

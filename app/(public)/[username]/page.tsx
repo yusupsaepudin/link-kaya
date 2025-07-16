@@ -9,23 +9,25 @@ import { Suspense } from "react"
 import { ProfileHeaderSkeleton } from "@/components/shared/loading-states"
 
 interface ProfilePageProps {
-  params: {
+  params: Promise<{
     username: string
-  }
-  searchParams: {
+  }>
+  searchParams: Promise<{
     category?: string
-  }
+  }>
 }
 
-export default function ProfilePage({ params, searchParams }: ProfilePageProps) {
-  const user = getUserByUsername(params.username)
+export default async function ProfilePage({ params, searchParams }: ProfilePageProps) {
+  const { username } = await params
+  const { category } = await searchParams
+  const user = getUserByUsername(username)
   
   if (!user || user.role !== 'reseller') {
     notFound()
   }
 
   const products = getResellerProducts(user.id)
-  const selectedCategory = searchParams.category
+  const selectedCategory = category
 
   // Filter products by category if selected
   const filteredProducts = selectedCategory
@@ -34,7 +36,7 @@ export default function ProfilePage({ params, searchParams }: ProfilePageProps) 
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-      <div className="container max-w-4xl py-8">
+      <div className="container-mobile py-8">
         <Suspense fallback={<ProfileHeaderSkeleton />}>
           <ProfileHeader user={user} />
         </Suspense>
@@ -46,7 +48,7 @@ export default function ProfilePage({ params, searchParams }: ProfilePageProps) 
             <CategoryFilter 
               categories={categories}
               selectedCategory={selectedCategory}
-              username={params.username}
+              username={username}
             />
             
             <ProductGrid 
