@@ -4,9 +4,10 @@ import { ProductCard } from "./product-card"
 interface RelatedProductsProps {
   products: ResellerProduct[]
   resellerId: string
+  username?: string
 }
 
-export function RelatedProducts({ products, resellerId }: RelatedProductsProps) {
+export function RelatedProducts({ products, resellerId, username }: RelatedProductsProps) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {products.map((resellerProduct) => (
@@ -17,6 +18,7 @@ export function RelatedProducts({ products, resellerId }: RelatedProductsProps) 
             resellerPrice: resellerProduct.sellingPrice
           }}
           resellerId={resellerId}
+          username={username}
           variant="compact"
         />
       ))}

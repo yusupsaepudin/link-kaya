@@ -14,10 +14,11 @@ import { useRouter } from "next/navigation"
 interface ProductCardProps {
   product: Product & { resellerPrice: number }
   resellerId: string
+  username?: string
   variant?: "compact" | "detailed"
 }
 
-export function ProductCard({ product, resellerId, variant = "compact" }: ProductCardProps) {
+export function ProductCard({ product, resellerId, username, variant = "compact" }: ProductCardProps) {
   const router = useRouter()
   const addItem = useCartStore((state) => state.addItem)
 
@@ -30,7 +31,8 @@ export function ProductCard({ product, resellerId, variant = "compact" }: Produc
   }
 
   const handleClick = () => {
-    router.push(`/${resellerId}/produk/${product.slug}`)
+    const path = username ? `/${username}/produk/${product.slug}` : `/${resellerId}/produk/${product.slug}`
+    router.push(path)
   }
 
   const discount = Math.round(((product.basePrice - product.resellerPrice) / product.basePrice) * -100)

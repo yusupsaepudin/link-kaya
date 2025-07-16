@@ -30,8 +30,8 @@ export function SocialLinks({ links }: SocialLinksProps) {
   if (links.length === 0) return null
 
   return (
-    <div className="mb-8">
-      <div className="flex flex-wrap gap-2">
+    <div className="py-6 border-t">
+      <div className="flex justify-center gap-4">
         {links.map((link) => {
           const Icon = iconMap[link.platform] || ExternalLink
           
@@ -39,18 +39,17 @@ export function SocialLinks({ links }: SocialLinksProps) {
             <Button
               key={link.id}
               variant="outline"
-              size="sm"
-              className="rounded-full"
+              size="icon"
+              className="rounded-full h-12 w-12"
               asChild
             >
               <a
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2"
+                aria-label={link.label || link.platform}
               >
-                <Icon className="h-4 w-4" />
-                <span>{link.label || link.platform}</span>
+                <Icon className="h-5 w-5" />
               </a>
             </Button>
           )

@@ -1,12 +1,13 @@
 "use client"
 
 import { ResellerProduct } from "@/types"
-import { ProductCard } from "@/components/features/products/product-card"
+import { ImprovedProductCard } from "@/components/features/products/improved-product-card"
 import { motion } from "framer-motion"
 
 interface ProductGridProps {
   products: ResellerProduct[]
   resellerId: string
+  username: string
 }
 
 const container = {
@@ -24,7 +25,7 @@ const item = {
   show: { opacity: 1, y: 0 }
 }
 
-export function ProductGrid({ products, resellerId }: ProductGridProps) {
+export function ProductGrid({ products, resellerId, username }: ProductGridProps) {
   const activeProducts = products.filter(p => p.isActive)
 
   if (activeProducts.length === 0) {
@@ -40,16 +41,17 @@ export function ProductGrid({ products, resellerId }: ProductGridProps) {
       variants={container}
       initial="hidden"
       animate="show"
-      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+      className="grid grid-cols-2 gap-3 sm:gap-4"
     >
       {activeProducts.map((resellerProduct) => (
         <motion.div key={resellerProduct.id} variants={item}>
-          <ProductCard
+          <ImprovedProductCard
             product={{
               ...resellerProduct.product!,
               resellerPrice: resellerProduct.sellingPrice
             }}
             resellerId={resellerId}
+            username={username}
           />
         </motion.div>
       ))}

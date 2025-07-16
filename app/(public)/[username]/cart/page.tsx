@@ -1,10 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Header } from "@/components/shared/header"
-import { Footer } from "@/components/shared/footer"
+import { useRouter, useParams } from "next/navigation"
+import { SimpleHeader } from "@/components/features/bio-link/simple-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -14,25 +13,33 @@ import { useCartStore } from "@/lib/stores/useCartStore"
 import { formatCurrency } from "@/lib/utils/formatters"
 import Image from "next/image"
 import { toast } from "sonner"
-import { mockUsers } from "@/lib/mock/users"
+import { getUserByUsername } from "@/lib/mock"
+import { notFound } from "next/navigation"
 
 export default function CartPage() {
   const router = useRouter()
+  const params = useParams()
+  const username = params.username as string
   const { items, removeItem, updateQuantity, getTotal } = useCartStore()
   const [promoCode, setPromoCode] = useState("")
+  const [user, setUser] = useState<any>(null) // eslint-disable-line @typescript-eslint/no-explicit-any
+
+  useEffect(() => {
+    const userData = getUserByUsername(username)
+    if (!userData || userData.role !== 'reseller') {
+      notFound()
+    }
+    setUser(userData)
+  }, [username])
 
   const handleCheckout = () => {
     if (items.length === 0) {
       toast.error("Your cart is empty")
       return
     }
-    router.push("/checkout")
+    router.push(`/${username}/checkout`)
   }
 
-  const getResellerName = (resellerId: string) => {
-    const reseller = mockUsers.find(user => user.id === resellerId)
-    return reseller?.displayName || "Unknown Reseller"
-  }
 
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     if (newQuantity < 1) {
@@ -42,43 +49,53 @@ export default function CartPage() {
     }
   }
 
+  if (!user) {
+    return null // Loading state
+  }
+
   if (items.length === 0) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1">
-          <div className="container py-12">
-            <div className="max-w-2xl mx-auto text-center">
+      <div className="min-h-screen bg-gray-50">
+        <SimpleHeader username={username} />
+        <div className="bg-white min-h-screen">
+          <div className="container-mobile py-12">
+            <div className="text-center">
               <ShoppingBag className="h-24 w-24 text-muted-foreground mx-auto mb-6" />
               <h1 className="text-3xl font-bold mb-4">Your cart is empty</h1>
               <p className="text-muted-foreground mb-8">
                 Looks like you haven&apos;t added anything to your cart yet.
               </p>
-              <Button asChild size="lg">
-                <Link href="/">
+              <Button asChild size="lg" className="bg-green-500 hover:bg-green-600">
+                <Link href={`/${username}`}>
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Continue Shopping
                 </Link>
               </Button>
             </div>
           </div>
-        </main>
-        <Footer />
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <div className="min-h-screen bg-gray-50">
+      <SimpleHeader username={username} />
       
-      <main className="flex-1">
-        <div className="container py-8">
-          <div className="max-w-6xl mx-auto">
-            <h1 className="text-3xl font-bold mb-8">Shopping Cart ({items.length} items)</h1>
+      <div className="bg-white min-h-screen">
+        <div className="container-mobile py-8">
+        <div className="mb-6">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href={`/${username}`}>
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to store
+            </Link>
+          </Button>
+        </div>
+        
+        <h1 className="text-2xl font-bold mb-6">Shopping Cart ({items.length} items)</h1>
             
-            <div className="grid lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-4">
+        <div className="space-y-4 mb-6">
                 {items.map((item) => (
                   <Card key={item.product.id}>
                     <CardContent className="p-4">
@@ -95,7 +112,7 @@ export default function CartPage() {
                         <div className="flex-1">
                           <h3 className="font-semibold mb-1">{item.product.name}</h3>
                           <p className="text-sm text-muted-foreground mb-2">
-                            Sold by: {getResellerName(item.resellerId)}
+                            {user.displayName}
                           </p>
                           
                           <div className="flex items-center justify-between">
@@ -148,12 +165,12 @@ export default function CartPage() {
                     </CardContent>
                   </Card>
                 ))}
-              </div>
-              
-              <div className="lg:col-span-1">
-                <Card className="sticky top-20">
-                  <CardContent className="p-6">
-                    <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+        </div>
+        
+        {/* Order Summary */}
+        <Card>
+          <CardContent className="p-6">
+            <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
                     
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between text-sm">
@@ -185,25 +202,20 @@ export default function CartPage() {
                     </div>
                     
                     <Button 
-                      className="w-full" 
+                      className="w-full bg-green-500 hover:bg-green-600" 
                       size="lg"
                       onClick={handleCheckout}
                     >
                       Proceed to Checkout
                     </Button>
                     
-                    <p className="text-xs text-muted-foreground text-center mt-4">
-                      Secure checkout powered by BioLink
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </div>
+            <p className="text-xs text-muted-foreground text-center mt-4">
+              Secure checkout powered by Lynk
+            </p>
+          </CardContent>
+        </Card>
         </div>
-      </main>
-
-      <Footer />
+      </div>
     </div>
   )
 }

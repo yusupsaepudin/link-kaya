@@ -1,8 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Header } from "@/components/shared/header"
-import { Footer } from "@/components/shared/footer"
+import { SimpleHeader } from "@/components/features/bio-link/simple-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,18 +13,21 @@ import { format } from "date-fns"
 
 interface TrackingPageProps {
   params: Promise<{
+    username: string
     invoiceId: string
   }>
 }
 
 export default function TrackingPage({ params }: TrackingPageProps) {
   const [invoiceId, setInvoiceId] = useState<string>('')
+  const [username, setUsername] = useState<string>('')
   const [searchInvoice, setSearchInvoice] = useState('')
   
   // Extract invoiceId from params
   useEffect(() => {
     params.then(p => {
       setInvoiceId(p.invoiceId)
+      setUsername(p.username)
       setSearchInvoice(p.invoiceId)
     })
   }, [params])
@@ -132,11 +134,11 @@ export default function TrackingPage({ params }: TrackingPageProps) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <div className="min-h-screen bg-gray-50">
+      <SimpleHeader username={username} />
       
-      <main className="flex-1">
-        <div className="container py-8">
+      <div className="bg-white min-h-screen">
+        <div className="container-mobile py-8">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-3xl font-bold mb-8">Track Your Order</h1>
 
@@ -153,7 +155,7 @@ export default function TrackingPage({ params }: TrackingPageProps) {
                       onChange={(e) => setSearchInvoice(e.target.value)}
                     />
                   </div>
-                  <Button type="submit">
+                  <Button type="submit" className="bg-green-500 hover:bg-green-600">
                     <Search className="mr-2 h-4 w-4" />
                     Track
                   </Button>
@@ -197,7 +199,6 @@ export default function TrackingPage({ params }: TrackingPageProps) {
               <CardContent>
                 <div className="space-y-6">
                   {orderData.timeline.map((item, index) => {
-                    const Icon = getStatusIcon(item.status)
                     return (
                       <div key={index} className="flex gap-4">
                         <div className="flex flex-col items-center">
@@ -300,9 +301,7 @@ export default function TrackingPage({ params }: TrackingPageProps) {
             </Card>
           </div>
         </div>
-      </main>
-
-      <Footer />
+      </div>
     </div>
   )
 }

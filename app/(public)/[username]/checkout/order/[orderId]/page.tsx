@@ -1,5 +1,4 @@
-import { Header } from "@/components/shared/header"
-import { Footer } from "@/components/shared/footer"
+import { SimpleHeader } from "@/components/features/bio-link/simple-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, Copy, MessageCircle, Package } from "lucide-react"
@@ -8,12 +7,13 @@ import { formatCurrency } from "@/lib/utils/formatters"
 
 interface OrderConfirmationPageProps {
   params: Promise<{
+    username: string
     orderId: string
   }>
 }
 
 export default async function OrderConfirmationPage({ params }: OrderConfirmationPageProps) {
-  const { orderId } = await params
+  const { username, orderId } = await params
   const invoiceId = `INV-${Date.now()}`
 
   // Mock order data
@@ -39,11 +39,11 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <div className="min-h-screen bg-gray-50">
+      <SimpleHeader username={username} />
       
-      <main className="flex-1">
-        <div className="container py-12">
+      <div className="bg-white min-h-screen">
+        <div className="container-mobile py-12">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
               <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -129,12 +129,12 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
 
             <div className="grid gap-4 sm:grid-cols-2">
               <Button variant="outline" asChild>
-                <Link href={`/track/${invoiceId}`}>
+                <Link href={`/${username}/track/${invoiceId}`}>
                   <Package className="mr-2 h-4 w-4" />
                   Track Order
                 </Link>
               </Button>
-              <Button asChild>
+              <Button asChild className="bg-green-500 hover:bg-green-600">
                 <a 
                   href={`https://wa.me/${orderData.customerInfo.phone.replace('+', '')}?text=Hi, I just placed an order ${orderId}`}
                   target="_blank"
@@ -151,14 +151,12 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
                 Need help? Contact our support team
               </p>
               <Button variant="link" asChild>
-                <Link href="/">Continue Shopping</Link>
+                <Link href={`/${username}`}>Continue Shopping</Link>
               </Button>
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
+      </div>
     </div>
   )
 }

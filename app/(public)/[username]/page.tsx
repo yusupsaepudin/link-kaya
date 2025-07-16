@@ -1,12 +1,10 @@
 import { notFound } from "next/navigation"
 import { getUserByUsername, getResellerProducts } from "@/lib/mock"
-import { ProfileHeader } from "@/components/features/bio-link/profile-header"
-import { SocialLinks } from "@/components/features/bio-link/social-links"
+import { SimpleHeader } from "@/components/features/bio-link/simple-header"
+import { ProfileSection } from "@/components/features/bio-link/profile-section"
 import { ProductGrid } from "@/components/features/bio-link/product-grid"
 import { CategoryFilter } from "@/components/features/bio-link/category-filter"
 import { categories } from "@/lib/mock/products"
-import { Suspense } from "react"
-import { ProfileHeaderSkeleton } from "@/components/shared/loading-states"
 
 interface ProfilePageProps {
   params: Promise<{
@@ -35,28 +33,36 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
     : products
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-      <div className="container-mobile py-8">
-        <Suspense fallback={<ProfileHeaderSkeleton />}>
-          <ProfileHeader user={user} />
-        </Suspense>
-        
-        <SocialLinks links={user.socialLinks} />
-        
-        {products.length > 0 && (
-          <>
-            <CategoryFilter 
-              categories={categories}
-              selectedCategory={selectedCategory}
-              username={username}
-            />
-            
-            <ProductGrid 
-              products={filteredProducts}
-              resellerId={user.id}
-            />
-          </>
-        )}
+    <div className="min-h-screen bg-gray-50">
+      <SimpleHeader username={username} />
+      
+      <div className="bg-white">
+        <div className="container-mobile">
+          <ProfileSection user={user} />
+          
+          {products.length > 0 && (
+            <div className="pb-8">
+              <CategoryFilter 
+                categories={categories}
+                selectedCategory={selectedCategory}
+                username={username}
+              />
+              
+              <ProductGrid 
+                products={filteredProducts}
+                resellerId={user.id}
+                username={username}
+              />
+            </div>
+          )}
+          
+          {/* Footer branding */}
+          <div className="py-6 text-center">
+            <p className="text-sm text-gray-500">
+              made with <span className="font-semibold">Lynk</span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   )
