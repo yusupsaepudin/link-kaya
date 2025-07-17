@@ -11,22 +11,18 @@ import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { 
   Building, 
-  Package, 
   Bell,
   Shield,
   DollarSign,
   Users,
   Save,
-  Edit2,
-  Globe,
-  Mail,
-  Phone
+  Edit2
 } from "lucide-react"
 import { useUserStore } from "@/lib/stores/useUserStore"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default function BrandSettingsPage() {
-  const { currentUser } = useUserStore()
+  const { currentUser: _currentUser } = useUserStore()
   const [isEditing, setIsEditing] = useState(false)
   
   const [companyInfo, setCompanyInfo] = useState({

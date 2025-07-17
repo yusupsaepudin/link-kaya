@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -44,11 +44,11 @@ export default function BrandProductsPage() {
 
   const products = currentUser ? getBrandProducts(currentUser.id) : []
 
-  const handleToggleStatus = (productId: string) => {
+  const handleToggleStatus = (_productId: string) => {
     toast.success("Product status updated")
   }
 
-  const handleDeleteProduct = (productId: string) => {
+  const handleDeleteProduct = (_productId: string) => {
     toast.success("Product deleted")
   }
 

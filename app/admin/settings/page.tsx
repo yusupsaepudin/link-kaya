@@ -13,7 +13,6 @@ import {
   Store, 
   Bell,
   Shield,
-  Palette,
   Link as LinkIcon,
   Save,
   Eye,

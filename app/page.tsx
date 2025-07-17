@@ -1,9 +1,8 @@
 import { Header } from "@/components/shared/header"
 import { Footer } from "@/components/shared/footer"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import Link from "next/link"
-import { ArrowRight, CheckCircle, Users, Package, DollarSign } from "lucide-react"
+import { ArrowRight, CheckCircle } from "lucide-react"
 
 export default function HomePage() {
   return (

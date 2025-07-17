@@ -2,16 +2,14 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { 
-  BarChart3, 
   TrendingUp, 
   Users,
   Package,
   DollarSign,
   Target,
-  Award,
-  ShoppingCart
+  Award
 } from "lucide-react"
-import { formatCurrency, formatNumber } from "@/lib/utils/formatters"
+import { formatCurrency } from "@/lib/utils/formatters"
 
 export default function BrandAnalyticsPage() {
   const analyticsData = [

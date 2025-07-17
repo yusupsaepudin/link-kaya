@@ -8,8 +8,7 @@ import {
   DollarSign, 
   TrendingUp,
   Plus,
-  ArrowUpRight,
-  ArrowDownRight
+  ArrowUpRight
 } from "lucide-react"
 import { formatCurrency } from "@/lib/utils/formatters"
 import Link from "next/link"

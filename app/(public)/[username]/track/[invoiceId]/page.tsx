@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, Circle, Package, Truck, Home, Search } from "lucide-react"
+import { CheckCircle2, Circle, Search } from "lucide-react"
 import { formatCurrency } from "@/lib/utils/formatters"
 import { format } from "date-fns"
 
@@ -118,20 +118,6 @@ export default function TrackingPage({ params }: TrackingPageProps) {
     }
   }
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "pending":
-        return Package
-      case "processing":
-        return Package
-      case "shipped":
-        return Truck
-      case "delivered":
-        return Home
-      default:
-        return Package
-    }
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">

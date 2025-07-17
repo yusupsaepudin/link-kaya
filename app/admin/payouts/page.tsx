@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { 
   DollarSign, 
-  TrendingUp, 
   Download,
   Calendar,
   CheckCircle,
@@ -16,7 +15,6 @@ import {
 } from "lucide-react"
 import { formatCurrency } from "@/lib/utils/formatters"
 import { format } from "date-fns"
-import { useUserStore } from "@/lib/stores/useUserStore"
 
 // Mock payout data
 const mockPayouts = [
@@ -47,7 +45,6 @@ const mockPayouts = [
 ]
 
 export default function AdminPayoutsPage() {
-  const currentUser = useUserStore((state) => state.currentUser)
   const [selectedTab, setSelectedTab] = useState("overview")
 
   const stats = {

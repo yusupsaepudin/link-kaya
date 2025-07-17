@@ -40,7 +40,7 @@ export default function RegisterPage() {
     await new Promise(resolve => setTimeout(resolve, 1500))
 
     // Mock user creation - default to reseller
-    const newUser = {
+    const newUser: UserProfile = {
       id: Date.now().toString(),
       email: formData.email,
       username: formData.username,
@@ -50,18 +50,17 @@ export default function RegisterPage() {
       role: "reseller" as const,
       socialLinks: [],
       resellerInfo: {
-        joinedAt: new Date(),
+        tier: "bronze" as const,
+        commission: 10,
         totalSales: 0,
         totalEarnings: 0,
-        productsListed: 0,
-        rating: 0,
-        reviewCount: 0
+        joinedAt: new Date()
       },
       createdAt: new Date(),
       updatedAt: new Date()
     }
 
-    setUser(newUser as UserProfile)
+    setUser(newUser)
     toast.success("Account created successfully!")
     
     // Redirect to reseller dashboard

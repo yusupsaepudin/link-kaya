@@ -12,7 +12,7 @@ interface SimpleProductDetailProps {
   resellerId: string
 }
 
-export function SimpleProductDetail({ product, resellerId }: SimpleProductDetailProps) {
+export function SimpleProductDetail({ product, resellerId: _resellerId }: SimpleProductDetailProps) {
   const [selectedImage, setSelectedImage] = useState(0)
 
   // Calculate discount percentage

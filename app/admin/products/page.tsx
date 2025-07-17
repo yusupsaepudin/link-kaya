@@ -41,11 +41,11 @@ export default function AdminProductsPage() {
   const activeProducts = resellerProducts.filter(p => p.isActive)
   const inactiveProducts = resellerProducts.filter(p => !p.isActive)
 
-  const handleToggleStatus = (productId: string) => {
+  const handleToggleStatus = (_productId: string) => {
     toast.success("Product status updated")
   }
 
-  const handleRemoveProduct = (productId: string) => {
+  const handleRemoveProduct = (_productId: string) => {
     toast.success("Product removed from your store")
   }
 

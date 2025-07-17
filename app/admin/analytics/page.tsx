@@ -2,18 +2,14 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { 
-  BarChart3, 
   TrendingUp, 
   Eye,
   Users,
-  ShoppingCart,
   DollarSign
 } from "lucide-react"
-import { useUserStore } from "@/lib/stores/useUserStore"
 import { formatCurrency, formatNumber } from "@/lib/utils/formatters"
 
 export default function AnalyticsPage() {
-  const { currentUser } = useUserStore()
 
   const analyticsData = [
     {
