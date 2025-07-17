@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { CartItem, Product } from '@/types'
+import React from 'react'
 
 interface CartState {
   items: CartItem[]
@@ -104,3 +105,29 @@ export const useCartStore = create<CartState>()(
     }
   )
 )
+
+// Client-side only hook to prevent hydration issues
+export const useCartStoreClient = () => {
+  const [mounted, setMounted] = React.useState(false)
+  
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+  
+  const store = useCartStore()
+  
+  if (!mounted) {
+    return {
+      items: [],
+      resellerId: null,
+      addItem: () => {},
+      removeItem: () => {},
+      updateQuantity: () => {},
+      clearCart: () => {},
+      getTotal: () => 0,
+      getItemCount: () => 0
+    }
+  }
+  
+  return store
+}

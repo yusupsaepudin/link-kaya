@@ -55,13 +55,6 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
               />
             </div>
           )}
-          
-          {/* Footer branding */}
-          <div className="py-6 text-center">
-            <p className="text-sm text-gray-500">
-              made with <span className="font-semibold">Lynk</span>
-            </p>
-          </div>
         </div>
       </div>
     </div>

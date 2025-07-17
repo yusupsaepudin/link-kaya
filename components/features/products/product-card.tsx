@@ -1,111 +1,81 @@
 "use client"
 
-import { Product } from "@/types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ShoppingCart, Eye } from "lucide-react"
+import { ShoppingCart } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { formatCurrency } from "@/lib/utils/formatters"
-import { useCartStore } from "@/lib/stores/useCartStore"
+import { useCartStoreClient } from "@/lib/stores/useCartStore"
+import { Product } from "@/types"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
 
 interface ProductCardProps {
   product: Product & { resellerPrice: number }
   resellerId: string
-  username?: string
-  variant?: "compact" | "detailed"
+  username: string
 }
 
-export function ProductCard({ product, resellerId, username, variant = "compact" }: ProductCardProps) {
-  const router = useRouter()
-  const addItem = useCartStore((state) => state.addItem)
+export function ProductCard({ product, resellerId, username }: ProductCardProps) {
+  const { addItem } = useCartStoreClient()
 
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    
+  const handleAddToCart = () => {
     addItem(product, resellerId)
-    toast.success("Added to cart!")
+    toast.success(`${product.name} added to cart`)
   }
 
-  const handleClick = () => {
-    const path = username ? `/${username}/produk/${product.slug}` : `/${resellerId}/produk/${product.slug}`
-    router.push(path)
-  }
-
-  const discount = Math.round(((product.basePrice - product.resellerPrice) / product.basePrice) * -100)
+  // Calculate discount percentage
+  const discountPercentage = product.resellerPrice > product.basePrice 
+    ? Math.round(((product.resellerPrice - product.basePrice) / product.basePrice) * 100)
+    : 0
 
   return (
-    <Card 
-      className="overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-      onClick={handleClick}
-    >
-      <div className="aspect-square relative">
-        <Image
-          src={product.images[0]}
-          alt={product.name}
-          fill
-          className="object-cover"
-        />
-        {discount > 0 && (
-          <Badge className="absolute top-2 right-2" variant="destructive">
-            +{discount}%
-          </Badge>
-        )}
-        {product.stock < 10 && product.stock > 0 && (
-          <Badge className="absolute top-2 left-2" variant="secondary">
-            {product.stock} left
-          </Badge>
-        )}
-      </div>
+    <Card className="overflow-hidden group">
+      <Link href={`/${username}/produk/${product.slug}`}>
+        <div className="relative aspect-square overflow-hidden">
+          <Image
+            src={product.images[0]}
+            alt={product.name}
+            fill
+            className="object-cover transition-transform group-hover:scale-105"
+          />
+          {discountPercentage > 0 && (
+            <Badge className="absolute top-2 left-2 bg-red-500 text-white">
+              +{discountPercentage}%
+            </Badge>
+          )}
+        </div>
+      </Link>
       
-      <CardContent className="p-3">
-        <h3 className="font-medium text-sm line-clamp-2 mb-1">
-          {product.name}
-        </h3>
+      <CardContent className="p-4">
+        <Link href={`/${username}/produk/${product.slug}`}>
+          <h3 className="font-semibold text-sm mb-1 line-clamp-2 hover:text-primary transition-colors">
+            {product.name}
+          </h3>
+        </Link>
         
-        {variant === "detailed" && (
-          <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
-            {product.description}
-          </p>
-        )}
-        
-        <div className="flex items-center justify-between gap-2 mb-2">
-          <div>
-            <div className="text-lg font-bold">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-lg">
               {formatCurrency(product.resellerPrice)}
-            </div>
+            </span>
             {product.resellerPrice > product.basePrice && (
-              <div className="text-xs text-muted-foreground line-through">
+              <span className="text-sm text-muted-foreground line-through">
                 {formatCurrency(product.basePrice)}
-              </div>
+              </span>
             )}
           </div>
         </div>
-
-        <div className="flex gap-2">
-          <Button
-            size="sm"
-            variant="outline"
-            className="flex-1"
-            onClick={(e) => {
-              e.stopPropagation()
-              handleClick()
-            }}
-          >
-            <Eye className="h-3 w-3" />
-          </Button>
-          <Button
-            size="sm"
-            className="flex-1"
-            onClick={handleAddToCart}
-            disabled={product.stock === 0}
-          >
-            <ShoppingCart className="h-3 w-3" />
-          </Button>
-        </div>
+        
+        <Button 
+          onClick={handleAddToCart}
+          className="w-full bg-green-500 hover:bg-green-600"
+          size="sm"
+        >
+          <ShoppingCart className="mr-2 h-4 w-4" />
+          Add
+        </Button>
       </CardContent>
     </Card>
   )

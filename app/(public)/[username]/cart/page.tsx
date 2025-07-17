@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import { ShoppingBag, Minus, Plus, Trash2, ArrowLeft } from "lucide-react"
-import { useCartStore } from "@/lib/stores/useCartStore"
+import { useCartStoreClient } from "@/lib/stores/useCartStore"
 import { formatCurrency } from "@/lib/utils/formatters"
 import Image from "next/image"
 import { toast } from "sonner"
@@ -20,7 +20,7 @@ export default function CartPage() {
   const router = useRouter()
   const params = useParams()
   const username = params.username as string
-  const { items, removeItem, updateQuantity, getTotal } = useCartStore()
+  const { items, removeItem, updateQuantity, getTotal } = useCartStoreClient()
   const [promoCode, setPromoCode] = useState("")
   const [user, setUser] = useState<any>(null) // eslint-disable-line @typescript-eslint/no-explicit-any
 

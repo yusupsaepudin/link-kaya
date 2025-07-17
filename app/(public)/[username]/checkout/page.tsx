@@ -11,7 +11,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
 import { ArrowLeft, CreditCard, Smartphone, Loader2 } from "lucide-react"
-import { useCartStore } from "@/lib/stores/useCartStore"
+import { useCartStoreClient } from "@/lib/stores/useCartStore"
 import { formatCurrency } from "@/lib/utils/formatters"
 import Image from "next/image"
 import Link from "next/link"
@@ -22,7 +22,7 @@ export default function CheckoutPage() {
   const router = useRouter()
   const params = useParams()
   const username = params.username as string
-  const { items, getTotal, clearCart } = useCartStore()
+  const { items, getTotal, clearCart } = useCartStoreClient()
   const [isProcessing, setIsProcessing] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState("transfer")
   const [user, setUser] = useState<any>(null) // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -200,19 +200,19 @@ export default function CheckoutPage() {
                         Bank Transfer
                       </Label>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Transfer to BCA, Mandiri, or BNI
+                        Pay via bank transfer to complete your order
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3 p-4 border rounded-lg">
-                    <RadioGroupItem value="ewallet" id="ewallet" className="mt-1" />
+                    <RadioGroupItem value="cod" id="cod" className="mt-1" />
                     <div className="flex-1">
-                      <Label htmlFor="ewallet" className="flex items-center gap-2 cursor-pointer">
+                      <Label htmlFor="cod" className="flex items-center gap-2 cursor-pointer">
                         <Smartphone className="h-4 w-4" />
-                        E-Wallet
+                        Cash on Delivery
                       </Label>
                       <p className="text-sm text-muted-foreground mt-1">
-                        GoPay, OVO, DANA, or ShopeePay
+                        Pay when you receive your order
                       </p>
                     </div>
                   </div>
@@ -227,10 +227,10 @@ export default function CheckoutPage() {
               <CardTitle className="text-lg">Order Summary</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3 mb-4">
+              <div className="space-y-4">
                 {items.map((item) => (
-                  <div key={item.product.id} className="flex gap-3">
-                    <div className="relative w-16 h-16 flex-shrink-0">
+                  <div key={item.product.id} className="flex items-center gap-3">
+                    <div className="relative w-12 h-12 flex-shrink-0">
                       <Image
                         src={item.product.images[0]}
                         alt={item.product.name}
@@ -239,53 +239,46 @@ export default function CheckoutPage() {
                       />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium line-clamp-1">{item.product.name}</p>
+                      <h4 className="font-medium text-sm">{item.product.name}</h4>
                       <p className="text-sm text-muted-foreground">
-                        {item.quantity} × {formatCurrency(item.product.resellerPrice)}
+                        Qty: {item.quantity} × {formatCurrency(item.product.resellerPrice)}
                       </p>
                     </div>
-                    <p className="text-sm font-medium">
+                    <div className="text-sm font-medium">
                       {formatCurrency(item.product.resellerPrice * item.quantity)}
-                    </p>
+                    </div>
                   </div>
                 ))}
-              </div>
-              
-              <Separator className="my-4" />
-              
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>Subtotal</span>
-                  <span>{formatCurrency(getTotal())}</span>
+                
+                <Separator />
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Subtotal</span>
+                    <span>{formatCurrency(getTotal())}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Shipping</span>
+                    <span className="text-green-600">Free</span>
+                  </div>
+                  <div className="flex justify-between font-semibold">
+                    <span>Total</span>
+                    <span>{formatCurrency(getTotal())}</span>
+                  </div>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span>Shipping</span>
-                  <span className="text-green-600">Free</span>
-                </div>
               </div>
-              
-              <Separator className="my-4" />
-              
-              <div className="flex justify-between font-semibold text-lg mb-6">
-                <span>Total</span>
-                <span>{formatCurrency(getTotal())}</span>
-              </div>
-              
-              <Button 
-                type="submit"
-                className="w-full bg-green-500 hover:bg-green-600" 
-                size="lg"
-                disabled={isProcessing}
-              >
-                {isProcessing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isProcessing ? "Processing..." : "Place Order"}
-              </Button>
-              
-              <p className="text-xs text-muted-foreground text-center mt-4">
-                By placing this order, you agree to our terms and conditions
-              </p>
             </CardContent>
           </Card>
+
+          <Button 
+            type="submit" 
+            className="w-full bg-green-500 hover:bg-green-600" 
+            size="lg"
+            disabled={isProcessing}
+          >
+            {isProcessing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Place Order
+          </Button>
         </form>
         </div>
       </div>

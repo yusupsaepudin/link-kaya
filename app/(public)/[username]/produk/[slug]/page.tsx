@@ -2,6 +2,8 @@ import { notFound } from "next/navigation"
 import { getUserByUsername, getResellerProducts } from "@/lib/mock"
 import { getProductBySlug } from "@/lib/mock/products"
 import { SimpleProductDetail } from "@/components/features/products/simple-product-detail"
+import { FloatingActionButtons } from "@/components/features/products/floating-action-buttons"
+import { SimpleHeader } from "@/components/features/bio-link/simple-header"
 
 interface ProductPageProps {
   params: Promise<{
@@ -35,14 +37,23 @@ export default async function ProductPage({ params }: ProductPageProps) {
     resellerPrice: resellerProduct.sellingPrice
   }
 
-  const discount = Math.round(((product.basePrice - productWithPrice.resellerPrice) / product.basePrice) * -100)
-
   return (
-    <SimpleProductDetail
-      product={product}
-      user={user}
-      productWithPrice={productWithPrice}
-      discount={discount}
-    />
+    <div className="min-h-screen bg-gray-50">
+      <SimpleHeader username={username} />
+      
+      <div className="bg-white min-h-screen">
+        <div className="container-mobile py-8">
+          <SimpleProductDetail
+            product={productWithPrice}
+            resellerId={user.id}
+          />
+        </div>
+      </div>
+      
+      <FloatingActionButtons
+        product={productWithPrice}
+        resellerId={user.id}
+      />
+    </div>
   )
 }

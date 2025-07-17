@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { toast } from "sonner"
 import { ArrowLeft, Loader2 } from "lucide-react"
 import { useUserStore } from "@/lib/stores/useUserStore"
@@ -19,8 +18,7 @@ export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
-    role: "buyer" as "buyer" | "reseller" | "brand"
+    password: ""
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +31,7 @@ export default function SignInPage() {
     // Mock authentication
     const user = getUserByEmail(formData.email)
     
-    if (user && user.role === formData.role) {
+    if (user) {
       setUser(user)
       toast.success("Welcome back!")
       
@@ -49,7 +47,7 @@ export default function SignInPage() {
           router.push("/")
       }
     } else {
-      toast.error("Invalid credentials or role mismatch")
+      toast.error("Invalid credentials")
     }
     
     setIsLoading(false)
@@ -100,34 +98,6 @@ export default function SignInPage() {
                 required
                 disabled={isLoading}
               />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Sign in as</Label>
-              <RadioGroup
-                value={formData.role}
-                onValueChange={(value) => setFormData({ ...formData, role: value as "buyer" | "reseller" | "brand" })}
-                disabled={isLoading}
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="buyer" id="buyer" />
-                  <Label htmlFor="buyer" className="font-normal cursor-pointer">
-                    Buyer
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="reseller" id="reseller" />
-                  <Label htmlFor="reseller" className="font-normal cursor-pointer">
-                    Reseller
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="brand" id="brand" />
-                  <Label htmlFor="brand" className="font-normal cursor-pointer">
-                    Brand
-                  </Label>
-                </div>
-              </RadioGroup>
             </div>
 
             <Button type="submit" className="w-full" disabled={isLoading}>

@@ -3,11 +3,10 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart, Minus, Plus } from "lucide-react"
-import { useCartStore } from "@/lib/stores/useCartStore"
+import { useCartStoreClient } from "@/lib/stores/useCartStore"
 import { Product } from "@/types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { formatCurrency } from "@/lib/utils/formatters"
 
 interface FloatingActionButtonsProps {
   product: Product & { resellerPrice: number }
@@ -17,23 +16,24 @@ interface FloatingActionButtonsProps {
 
 export function FloatingActionButtons({ product, resellerId, disabled }: FloatingActionButtonsProps) {
   const [quantity, setQuantity] = useState(1)
-  const addItem = useCartStore((state) => state.addItem)
+  const { addItem, clearCart } = useCartStoreClient()
   const router = useRouter()
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
       addItem(product, resellerId)
     }
-    toast.success(`${quantity} produk ditambahkan ke keranjang`)
+    toast.success(`Added ${quantity} item${quantity > 1 ? 's' : ''} to cart!`)
     setQuantity(1)
   }
 
   const handleBuyNow = () => {
     // Clear cart and add current item
-    useCartStore.getState().clearCart()
+    clearCart()
     for (let i = 0; i < quantity; i++) {
       addItem(product, resellerId)
     }
+    // Navigate to checkout
     router.push(`/${resellerId}/checkout`)
   }
 
@@ -68,7 +68,7 @@ export function FloatingActionButtons({ product, resellerId, disabled }: Floatin
                   >
                     <Minus className="h-3 w-3" />
                   </Button>
-                  <span className="w-8 text-center font-semibold text-gray-900">{quantity}</span>
+                  <span className="w-12 text-center font-medium">{quantity}</span>
                   <Button
                     variant="outline"
                     size="icon"
@@ -84,7 +84,7 @@ export function FloatingActionButtons({ product, resellerId, disabled }: Floatin
               <div className="text-right">
                 <p className="text-xs text-gray-500">Total</p>
                 <p className="text-lg font-bold text-gray-900">
-                  {formatCurrency(product.resellerPrice * quantity)}
+                  Rp {(product.resellerPrice * quantity).toLocaleString()}
                 </p>
               </div>
             </div>

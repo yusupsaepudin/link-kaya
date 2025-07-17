@@ -40,6 +40,12 @@ export function ProfileSection({ user }: ProfileSectionProps) {
         
         <h2 className="text-xl font-bold mb-2">@{user.username}</h2>
         
+        {user.bio && (
+          <p className="text-gray-600 mb-4 max-w-sm">
+            {user.bio}
+          </p>
+        )}
+        
         {user.socialLinks.length > 0 && (
           <div className="flex justify-center gap-3 mb-4">
             {user.socialLinks.map((link) => {

@@ -2,14 +2,12 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ShoppingCart, Menu, X } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { useCartStore } from "@/lib/stores/useCartStore"
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
-  const itemCount = useCartStore((state) => state.getItemCount())
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -33,22 +31,10 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-4">
-          {/* Cart Button */}
-          <Button variant="ghost" size="icon" className="relative" asChild>
-            <Link href="/cart">
-              <ShoppingCart className="h-5 w-5" />
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
-                  {itemCount}
-                </span>
-              )}
-            </Link>
-          </Button>
-
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-2">
             <Button variant="ghost" asChild>
-              <Link href="/login">Sign In</Link>
+              <Link href="/signin">Sign In</Link>
             </Button>
             <Button asChild>
               <Link href="/register">Join as Reseller</Link>
@@ -87,7 +73,7 @@ export function Header() {
               </Link>
               <div className="flex flex-col gap-2 pt-4 border-t">
                 <Button variant="outline" asChild className="w-full">
-                  <Link href="/login">Sign In</Link>
+                  <Link href="/signin">Sign In</Link>
                 </Button>
                 <Button asChild className="w-full">
                   <Link href="/register">Join as Reseller</Link>

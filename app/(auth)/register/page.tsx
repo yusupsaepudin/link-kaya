@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
 import { ArrowLeft, Loader2 } from "lucide-react"
@@ -24,8 +23,7 @@ export default function RegisterPage() {
     confirmPassword: "",
     fullName: "",
     username: "",
-    bio: "",
-    role: "reseller" as "reseller" | "brand"
+    bio: ""
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,7 +39,7 @@ export default function RegisterPage() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500))
 
-    // Mock user creation
+    // Mock user creation - default to reseller
     const newUser = {
       id: Date.now().toString(),
       email: formData.email,
@@ -49,30 +47,16 @@ export default function RegisterPage() {
       displayName: formData.fullName,
       bio: formData.bio,
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=" + formData.username,
-      role: formData.role,
+      role: "reseller" as const,
       socialLinks: [],
-      ...(formData.role === "reseller" && {
-        resellerInfo: {
-          joinedAt: new Date(),
-          totalSales: 0,
-          totalEarnings: 0,
-          productsListed: 0,
-          rating: 0,
-          reviewCount: 0
-        }
-      }),
-      ...(formData.role === "brand" && {
-        brandInfo: {
-          companyName: formData.fullName,
-          description: formData.bio,
-          website: "",
-          joinedAt: new Date(),
-          totalProducts: 0,
-          totalResellers: 0,
-          totalRevenue: 0,
-          commissionRate: 20
-        }
-      }),
+      resellerInfo: {
+        joinedAt: new Date(),
+        totalSales: 0,
+        totalEarnings: 0,
+        productsListed: 0,
+        rating: 0,
+        reviewCount: 0
+      },
       createdAt: new Date(),
       updatedAt: new Date()
     }
@@ -80,12 +64,8 @@ export default function RegisterPage() {
     setUser(newUser as UserProfile)
     toast.success("Account created successfully!")
     
-    // Redirect based on role
-    if (formData.role === "reseller") {
-      router.push("/admin/dashboard")
-    } else {
-      router.push("/brand/dashboard")
-    }
+    // Redirect to reseller dashboard
+    router.push("/admin/dashboard")
     
     setIsLoading(false)
   }
@@ -107,38 +87,14 @@ export default function RegisterPage() {
           </div>
           <CardTitle className="text-2xl">Create an account</CardTitle>
           <CardDescription>
-            Join as a reseller or brand partner
+            Join as a reseller and start earning commissions
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label>Join as</Label>
-              <RadioGroup
-                value={formData.role}
-                onValueChange={(value) => setFormData({ ...formData, role: value as "reseller" | "brand" })}
-                disabled={isLoading}
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="reseller" id="reseller" />
-                  <Label htmlFor="reseller" className="font-normal cursor-pointer">
-                    Reseller - Sell products and earn commissions
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="brand" id="brand" />
-                  <Label htmlFor="brand" className="font-normal cursor-pointer">
-                    Brand - List products for resellers
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div>
-
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="fullName">
-                  {formData.role === "brand" ? "Company Name" : "Full Name"}
-                </Label>
+                <Label htmlFor="fullName">Full Name</Label>
                 <Input
                   id="fullName"
                   value={formData.fullName}
@@ -175,12 +131,10 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="bio">
-                {formData.role === "brand" ? "Company Description" : "Bio"}
-              </Label>
+              <Label htmlFor="bio">Bio</Label>
               <Textarea
                 id="bio"
-                placeholder={formData.role === "brand" ? "Tell us about your brand..." : "Tell your customers about yourself..."}
+                placeholder="Tell your customers about yourself..."
                 value={formData.bio}
                 onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                 rows={3}
