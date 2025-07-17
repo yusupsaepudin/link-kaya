@@ -51,35 +51,46 @@
   --card-foreground: oklch(0.15 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.75 0.15 260);
+  /* MediaKaya Blue Primary */
+  --primary: oklch(0.45 0.15 240);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.96 0.02 260);
-  --secondary-foreground: oklch(0.15 0 0);
-  --muted: oklch(0.96 0.01 260);
+  /* MediaKaya Red Secondary */
+  --secondary: oklch(0.65 0.22 25);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.96 0.01 240);
   --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.93 0.05 260);
+  /* Light MediaKaya Blue Accent */
+  --accent: oklch(0.93 0.05 240);
   --accent-foreground: oklch(0.15 0 0);
   --destructive: oklch(0.65 0.25 20);
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.92 0 0);
   --input: oklch(0.92 0 0);
-  --ring: oklch(0.75 0.15 260);
-  --chart-1: oklch(0.7 0.2 20);
+  --ring: oklch(0.45 0.15 240);
+  --chart-1: oklch(0.65 0.22 25);
   --chart-2: oklch(0.7 0.2 90);
-  --chart-3: oklch(0.7 0.2 190);
-  --chart-4: oklch(0.7 0.2 260);
+  --chart-3: oklch(0.45 0.15 240);
+  --chart-4: oklch(0.7 0.2 190);
   --chart-5: oklch(0.7 0.2 330);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.45 0.15 240);
+  --sidebar-primary-foreground: oklch(1 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --gradient-1: linear-gradient(135deg, oklch(0.85 0.15 260), oklch(0.75 0.2 280));
-  --gradient-2: linear-gradient(135deg, oklch(0.9 0.1 20), oklch(0.85 0.15 40));
-  --gradient-3: linear-gradient(135deg, oklch(0.85 0.15 190), oklch(0.8 0.2 220));
+  /* MediaKaya Brand Gradients */
+  --gradient-1: linear-gradient(135deg, oklch(0.45 0.15 240), oklch(0.55 0.18 250));
+  --gradient-2: linear-gradient(135deg, oklch(0.65 0.22 25), oklch(0.75 0.18 35));
+  --gradient-3: linear-gradient(135deg, oklch(0.45 0.15 240), oklch(0.65 0.22 25));
+  /* MediaKaya Brand Colors */
+  --mediakaya-blue: oklch(0.45 0.15 240);
+  --mediakaya-blue-light: oklch(0.65 0.12 240);
+  --mediakaya-blue-dark: oklch(0.35 0.18 240);
+  --mediakaya-red: oklch(0.65 0.22 25);
+  --mediakaya-red-light: oklch(0.75 0.18 25);
+  --mediakaya-red-dark: oklch(0.55 0.25 25);
 }
 
 .dark {
@@ -89,35 +100,45 @@
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.15 0 0);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.65 0.15 260);
+  /* MediaKaya Blue Primary - Lighter for dark mode */
+  --primary: oklch(0.65 0.12 240);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.2 0.02 260);
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.2 0.01 260);
+  /* MediaKaya Red Secondary - Lighter for dark mode */
+  --secondary: oklch(0.75 0.18 25);
+  --secondary-foreground: oklch(0.1 0 0);
+  --muted: oklch(0.2 0.01 240);
   --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.25 0.05 260);
+  --accent: oklch(0.25 0.05 240);
   --accent-foreground: oklch(0.98 0 0);
   --destructive: oklch(0.65 0.25 20);
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.25 0 0);
   --input: oklch(0.25 0 0);
-  --ring: oklch(0.65 0.15 260);
-  --chart-1: oklch(0.7 0.2 20);
+  --ring: oklch(0.65 0.12 240);
+  --chart-1: oklch(0.75 0.18 25);
   --chart-2: oklch(0.7 0.2 90);
-  --chart-3: oklch(0.7 0.2 190);
-  --chart-4: oklch(0.7 0.2 260);
+  --chart-3: oklch(0.65 0.12 240);
+  --chart-4: oklch(0.7 0.2 190);
   --chart-5: oklch(0.7 0.2 330);
   --sidebar: oklch(0.15 0 0);
   --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.65 0.15 260);
+  --sidebar-primary: oklch(0.65 0.12 240);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.25 0.05 260);
+  --sidebar-accent: oklch(0.25 0.05 240);
   --sidebar-accent-foreground: oklch(0.98 0 0);
   --sidebar-border: oklch(0.25 0 0);
-  --sidebar-ring: oklch(0.65 0.15 260);
-  --gradient-1: linear-gradient(135deg, oklch(0.6 0.15 260), oklch(0.5 0.2 280));
-  --gradient-2: linear-gradient(135deg, oklch(0.65 0.1 20), oklch(0.6 0.15 40));
-  --gradient-3: linear-gradient(135deg, oklch(0.6 0.15 190), oklch(0.55 0.2 220));
+  --sidebar-ring: oklch(0.65 0.12 240);
+  /* MediaKaya Brand Gradients - Dark mode */
+  --gradient-1: linear-gradient(135deg, oklch(0.65 0.12 240), oklch(0.55 0.15 250));
+  --gradient-2: linear-gradient(135deg, oklch(0.75 0.18 25), oklch(0.65 0.20 35));
+  --gradient-3: linear-gradient(135deg, oklch(0.65 0.12 240), oklch(0.75 0.18 25));
+  /* MediaKaya Brand Colors - Dark mode variations */
+  --mediakaya-blue: oklch(0.65 0.12 240);
+  --mediakaya-blue-light: oklch(0.75 0.10 240);
+  --mediakaya-blue-dark: oklch(0.55 0.15 240);
+  --mediakaya-red: oklch(0.75 0.18 25);
+  --mediakaya-red-light: oklch(0.85 0.15 25);
+  --mediakaya-red-dark: oklch(0.65 0.20 25);
 }
 
 @layer base {
@@ -210,5 +231,62 @@
   }
   .glass-border {
     @apply border border-white/20 dark:border-white/10;
+  }
+  
+  /* MediaKaya Brand Color Utilities */
+  .bg-mediakaya-blue {
+    background-color: var(--mediakaya-blue);
+  }
+  .bg-mediakaya-blue-light {
+    background-color: var(--mediakaya-blue-light);
+  }
+  .bg-mediakaya-blue-dark {
+    background-color: var(--mediakaya-blue-dark);
+  }
+  .bg-mediakaya-red {
+    background-color: var(--mediakaya-red);
+  }
+  .bg-mediakaya-red-light {
+    background-color: var(--mediakaya-red-light);
+  }
+  .bg-mediakaya-red-dark {
+    background-color: var(--mediakaya-red-dark);
+  }
+  
+  .text-mediakaya-blue {
+    color: var(--mediakaya-blue);
+  }
+  .text-mediakaya-blue-light {
+    color: var(--mediakaya-blue-light);
+  }
+  .text-mediakaya-blue-dark {
+    color: var(--mediakaya-blue-dark);
+  }
+  .text-mediakaya-red {
+    color: var(--mediakaya-red);
+  }
+  .text-mediakaya-red-light {
+    color: var(--mediakaya-red-light);
+  }
+  .text-mediakaya-red-dark {
+    color: var(--mediakaya-red-dark);
+  }
+  
+  .border-mediakaya-blue {
+    border-color: var(--mediakaya-blue);
+  }
+  .border-mediakaya-red {
+    border-color: var(--mediakaya-red);
+  }
+  
+  /* MediaKaya Brand Gradient Utilities */
+  .bg-mediakaya-gradient-1 {
+    background: var(--gradient-1);
+  }
+  .bg-mediakaya-gradient-2 {
+    background: var(--gradient-2);
+  }
+  .bg-mediakaya-gradient-3 {
+    background: var(--gradient-3);
   }
 }

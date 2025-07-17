@@ -155,7 +155,7 @@ export default function TrackingPage({ params }: TrackingPageProps) {
                       onChange={(e) => setSearchInvoice(e.target.value)}
                     />
                   </div>
-                  <Button type="submit" className="bg-green-500 hover:bg-green-600">
+                  <Button type="submit" className="bg-mediakaya-red hover:bg-mediakaya-red-dark">
                     <Search className="mr-2 h-4 w-4" />
                     Lacak
                   </Button>

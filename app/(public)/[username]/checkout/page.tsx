@@ -264,7 +264,7 @@ export default function CheckoutPage() {
 
           <Button 
             type="submit" 
-            className="w-full bg-green-500 hover:bg-green-600" 
+            className="w-full bg-mediakaya-red hover:bg-mediakaya-red-dark" 
             size="lg"
             disabled={isProcessing}
           >

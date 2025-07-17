@@ -96,8 +96,8 @@ export function ImprovedProductCard({ product, resellerId, username }: ImprovedP
           disabled={isAdding}
           className={`w-full transition-all duration-300 ${
             justAdded 
-              ? 'bg-green-600 hover:bg-green-600' 
-              : 'bg-green-500 hover:bg-green-600'
+              ? 'bg-mediakaya-red hover:bg-mediakaya-red' 
+              : 'bg-mediakaya-red hover:bg-mediakaya-red-dark'
           } ${isAdding ? 'scale-95' : 'scale-100'}`}
           size="sm"
         >

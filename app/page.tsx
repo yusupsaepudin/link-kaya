@@ -12,26 +12,25 @@ export default function HomePage() {
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-20 lg:py-32 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20" />
-          <div className="container relative">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Build Your Bio Link Store & Earn Commissions
+        <section className="relative py-20 lg:py-32">
+          <div className="container">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Buat Bio Link Store Anda & Mulai Jualan Online
               </h1>
-              <p className="text-xl text-muted-foreground mb-8">
-                Join thousands of resellers creating profitable online stores. 
-                Curate products from top brands, set your prices, and start earning today.
+              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                Platform sederhana untuk membuat toko online melalui bio link. 
+                Pilih produk, atur harga, dan mulai berjualan dengan mudah.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild>
+                <Button size="lg" className="bg-mediakaya-blue hover:bg-mediakaya-blue-dark" asChild>
                   <Link href="/register">
-                    Start Selling Now
+                    Mulai Berjualan
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <Link href="/explore">Explore Stores</Link>
+                  <Link href="/sarahbeauty">Lihat Contoh Toko</Link>
                 </Button>
               </div>
             </div>
@@ -39,24 +38,35 @@ export default function HomePage() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-12 border-y">
+        <section className="py-16 bg-gray-50">
           <div className="container">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              <div>
-                <div className="text-3xl font-bold">10K+</div>
-                <div className="text-sm text-muted-foreground">Active Resellers</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold">500+</div>
-                <div className="text-sm text-muted-foreground">Partner Brands</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold">50K+</div>
-                <div className="text-sm text-muted-foreground">Products Listed</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold">Rp 2M+</div>
-                <div className="text-sm text-muted-foreground">Paid to Resellers</div>
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-2xl font-semibold mb-4 text-gray-900">Mengapa Memilih Bio Link Store?</h2>
+              <p className="text-gray-600 mb-12">
+                Platform yang dirancang untuk memudahkan Anda memulai bisnis online tanpa ribet.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
+                <div>
+                  <div className="w-12 h-12 bg-mediakaya-blue/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-2xl">📱</span>
+                  </div>
+                  <div className="font-semibold text-gray-900">Mudah Digunakan</div>
+                  <div className="text-sm text-gray-600">Setup dalam hitungan menit</div>
+                </div>
+                <div>
+                  <div className="w-12 h-12 bg-mediakaya-blue/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-2xl">💰</span>
+                  </div>
+                  <div className="font-semibold text-gray-900">Atur Harga Sendiri</div>
+                  <div className="text-sm text-gray-600">Kontrol penuh atas profit</div>
+                </div>
+                <div>
+                  <div className="w-12 h-12 bg-mediakaya-blue/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-2xl">🚀</span>
+                  </div>
+                  <div className="font-semibold text-gray-900">Tanpa Modal Besar</div>
+                  <div className="text-sm text-gray-600">Mulai tanpa stok barang</div>
+                </div>
               </div>
             </div>
           </div>
@@ -65,55 +75,65 @@ export default function HomePage() {
         {/* How It Works */}
         <section className="py-20">
           <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              <Card className="p-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-6 w-6 text-purple-600" />
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">Cara Kerjanya</h2>
+              <p className="text-gray-600">
+                Hanya 3 langkah sederhana untuk memulai toko online Anda
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              <div className="text-center">
+                <div className="w-16 h-16 rounded-full bg-white border-2 border-mediakaya-blue flex items-center justify-center mx-auto mb-6">
+                  <span className="text-xl font-bold text-mediakaya-blue">1</span>
                 </div>
-                <h3 className="font-semibold mb-2">1. Create Your Store</h3>
-                <p className="text-sm text-muted-foreground">
-                  Sign up and customize your bio link page with your brand identity
+                <h3 className="font-semibold mb-3 text-gray-900">Buat Akun & Setup Toko</h3>
+                <p className="text-gray-600">
+                  Daftar dan buat halaman bio link Anda dalam beberapa menit
                 </p>
-              </Card>
-              <Card className="p-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-pink-100 dark:bg-pink-900/20 flex items-center justify-center mx-auto mb-4">
-                  <Package className="h-6 w-6 text-pink-600" />
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 rounded-full bg-white border-2 border-mediakaya-blue flex items-center justify-center mx-auto mb-6">
+                  <span className="text-xl font-bold text-mediakaya-blue">2</span>
                 </div>
-                <h3 className="font-semibold mb-2">2. Add Products</h3>
-                <p className="text-sm text-muted-foreground">
-                  Browse our catalog and add products with your custom markup
+                <h3 className="font-semibold mb-3 text-gray-900">Pilih & Tambah Produk</h3>
+                <p className="text-gray-600">
+                  Pilih produk dari katalog dan tentukan harga jual Anda
                 </p>
-              </Card>
-              <Card className="p-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mx-auto mb-4">
-                  <DollarSign className="h-6 w-6 text-green-600" />
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 rounded-full bg-white border-2 border-mediakaya-blue flex items-center justify-center mx-auto mb-6">
+                  <span className="text-xl font-bold text-mediakaya-blue">3</span>
                 </div>
-                <h3 className="font-semibold mb-2">3. Earn Commissions</h3>
-                <p className="text-sm text-muted-foreground">
-                  Share your link and earn on every sale you make
+                <h3 className="font-semibold mb-3 text-gray-900">Share & Mulai Jualan</h3>
+                <p className="text-gray-600">
+                  Bagikan link toko Anda dan mulai raih keuntungan
                 </p>
-              </Card>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Features */}
-        <section className="py-20 bg-muted/50">
+        <section className="py-20 bg-gray-50">
           <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-12">Why Choose BioLink Reseller?</h2>
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">Fitur yang Membantu Anda</h2>
+              <p className="text-gray-600">
+                Tools sederhana namun lengkap untuk mendukung bisnis online Anda
+              </p>
+            </div>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {[
-                "No inventory needed - we handle shipping",
-                "Set your own prices and profit margins",
-                "Real-time analytics and sales tracking",
-                "Multiple payment methods supported",
-                "Mobile-optimized stores",
-                "24/7 customer support"
+                "Tanpa perlu stok barang - kami yang urus pengiriman",
+                "Bebas tentukan harga jual dan margin keuntungan",
+                "Pantau penjualan melalui dashboard sederhana", 
+                "Dukungan berbagai metode pembayaran",
+                "Tampilan toko yang mobile-friendly",
+                "Tim support yang siap membantu"
               ].map((feature, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
-                  <span>{feature}</span>
+                  <CheckCircle className="h-5 w-5 text-mediakaya-blue mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-700">{feature}</span>
                 </div>
               ))}
             </div>
@@ -123,18 +143,26 @@ export default function HomePage() {
         {/* CTA Section */}
         <section className="py-20">
           <div className="container">
-            <Card className="p-8 md:p-12 text-center bg-gradient-to-br from-purple-600 to-pink-600 text-white border-0">
-              <h2 className="text-3xl font-bold mb-4">Ready to Start Your Business?</h2>
-              <p className="text-lg mb-8 opacity-90">
-                Join thousands of successful resellers today
+            <div className="max-w-2xl mx-auto text-center">
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">Siap Memulai Toko Online Anda?</h2>
+              <p className="text-lg text-gray-600 mb-8">
+                Bergabunglah dengan reseller lainnya yang sudah memulai bisnis online mereka
               </p>
-              <Button size="lg" variant="secondary" asChild>
-                <Link href="/register">
-                  Create Your Store
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </Card>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg" className="bg-mediakaya-blue hover:bg-mediakaya-blue-dark" asChild>
+                  <Link href="/register">
+                    Daftar Sekarang
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild>
+                  <Link href="/sarahbeauty">Lihat Demo Toko</Link>
+                </Button>
+              </div>
+              <p className="text-sm text-gray-500 mt-6">
+                Gratis untuk memulai • Setup dalam 5 menit
+              </p>
+            </div>
           </div>
         </section>
       </main>

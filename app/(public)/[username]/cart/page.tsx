@@ -70,7 +70,7 @@ export default function CartPage() {
               <p className="text-muted-foreground mb-8">
                 Belum ada produk yang ditambahkan ke keranjang Anda.
               </p>
-              <Button asChild size="lg" className="bg-green-500 hover:bg-green-600">
+              <Button asChild size="lg" className="bg-mediakaya-red hover:bg-mediakaya-red-dark">
                 <Link href={`/${username}`}>
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Lanjut Belanja
@@ -203,7 +203,7 @@ export default function CartPage() {
                     </div>
                     
                     <Button 
-                      className="w-full bg-green-500 hover:bg-green-600" 
+                      className="w-full bg-mediakaya-red hover:bg-mediakaya-red-dark" 
                       size="lg"
                       onClick={handleCheckout}
                     >

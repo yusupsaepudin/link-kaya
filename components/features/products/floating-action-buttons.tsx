@@ -151,7 +151,7 @@ export function FloatingActionButtons({ product, resellerId, username, disabled 
                 </Button>
                 <Button
                   size="lg"
-                  className={`flex-1 h-12 bg-green-600 hover:bg-green-700 text-white font-medium transition-all duration-300 ${
+                  className={`flex-1 h-12 bg-mediakaya-red hover:bg-mediakaya-red-dark text-white font-medium transition-all duration-300 ${
                     isBuyingNow ? 'scale-95' : 'scale-100'
                   }`}
                   disabled={disabled || isAddingToCart || isBuyingNow}

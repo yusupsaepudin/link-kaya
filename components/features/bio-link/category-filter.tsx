@@ -31,7 +31,7 @@ export function CategoryFilter({ categories, selectedCategory, username }: Categ
           className={`rounded-full whitespace-nowrap flex-shrink-0 px-4 py-2 text-sm font-medium transition-all duration-200 ${
             selectedCategory 
               ? "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white" 
-              : "bg-blue-500 text-white hover:bg-blue-600 border-blue-500"
+              : "bg-mediakaya-blue text-white hover:bg-mediakaya-blue-dark border-mediakaya-blue"
           }`}
         >
           Semua Produk
@@ -44,7 +44,7 @@ export function CategoryFilter({ categories, selectedCategory, username }: Categ
             onClick={() => handleCategoryChange(category.id)}
             className={`rounded-full whitespace-nowrap flex-shrink-0 px-4 py-2 text-sm font-medium transition-all duration-200 ${
               selectedCategory === category.id
-                ? "bg-blue-500 text-white hover:bg-blue-600 border-blue-500"
+                ? "bg-mediakaya-blue text-white hover:bg-mediakaya-blue-dark border-mediakaya-blue"
                 : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"
             }`}
           >

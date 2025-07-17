@@ -138,7 +138,7 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
                   Lacak Pesanan
                 </Link>
               </Button>
-              <Button asChild className="bg-green-500 hover:bg-green-600">
+              <Button asChild className="bg-mediakaya-red hover:bg-mediakaya-red-dark">
                 <a 
                   href={`https://wa.me/${orderData.customerInfo.phone.replace('+', '')}?text=Halo, saya baru saja melakukan pesanan ${orderId}`}
                   target="_blank"
