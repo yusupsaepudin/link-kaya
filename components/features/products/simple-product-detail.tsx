@@ -24,12 +24,14 @@ export function SimpleProductDetail({ product, resellerId }: SimpleProductDetail
     <div className="space-y-6">
       {/* Product Images */}
       <div className="space-y-4">
-        <div className="aspect-square relative overflow-hidden rounded-lg border">
+        <div className="aspect-square relative overflow-hidden rounded-lg border bg-gray-50">
           <Image
             src={product.images[selectedImage]}
             alt={product.name}
             fill
-            className="object-cover"
+            className="object-cover object-center"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority
           />
           {discountPercentage > 0 && (
             <Badge className="absolute top-4 left-4 bg-red-500 text-white">
@@ -44,7 +46,7 @@ export function SimpleProductDetail({ product, resellerId }: SimpleProductDetail
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
-                className={`relative w-20 h-20 flex-shrink-0 rounded-lg border-2 overflow-hidden ${
+                className={`relative w-20 h-20 flex-shrink-0 rounded-lg border-2 overflow-hidden bg-gray-50 ${
                   selectedImage === index ? 'border-primary' : 'border-gray-200'
                 }`}
               >
@@ -52,7 +54,8 @@ export function SimpleProductDetail({ product, resellerId }: SimpleProductDetail
                   src={image}
                   alt={`${product.name} ${index + 1}`}
                   fill
-                  className="object-cover"
+                  className="object-cover object-center"
+                  sizes="80px"
                 />
               </button>
             ))}

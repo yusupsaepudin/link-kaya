@@ -56,7 +56,12 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <SimpleHeader username={username} />
+        <SimpleHeader 
+          username={username} 
+          showBackButton={true}
+          hideCartIcon={true}
+          hideWishlistIcon={true}
+        />
         <div className="bg-white min-h-screen">
           <div className="container-mobile py-12">
             <div className="text-center">
@@ -80,19 +85,15 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <SimpleHeader username={username} />
+      <SimpleHeader 
+        username={username} 
+        showBackButton={true}
+        hideCartIcon={true}
+        hideWishlistIcon={true}
+      />
       
       <div className="bg-white min-h-screen">
         <div className="container-mobile py-8">
-        <div className="mb-6">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href={`/${username}`}>
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to store
-            </Link>
-          </Button>
-        </div>
-        
         <h1 className="text-2xl font-bold mb-6">Shopping Cart ({items.length} items)</h1>
             
         <div className="space-y-4 mb-6">

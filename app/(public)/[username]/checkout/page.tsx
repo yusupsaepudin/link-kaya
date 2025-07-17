@@ -72,17 +72,15 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <SimpleHeader username={username} />
+      <SimpleHeader 
+        username={username} 
+        showBackButton={true}
+        hideCartIcon={true}
+        hideWishlistIcon={true}
+      />
       
       <div className="bg-white min-h-screen">
         <div className="container-mobile py-8">
-        <div className="mb-6">
-          <Link href={`/${username}/cart`} className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to cart
-          </Link>
-        </div>
-
         <h1 className="text-2xl font-bold mb-6">Checkout</h1>
         
         <form onSubmit={handleSubmit} className="space-y-6">

@@ -39,7 +39,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <SimpleHeader username={username} />
+      <SimpleHeader 
+        username={username} 
+        showBackButton={true}
+        hideCartIcon={false}
+        hideWishlistIcon={false}
+      />
       
       <div className="bg-white min-h-screen">
         <div className="container-mobile py-8">
@@ -53,6 +58,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <FloatingActionButtons
         product={productWithPrice}
         resellerId={user.id}
+        username={username}
       />
     </div>
   )

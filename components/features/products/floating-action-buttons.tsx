@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ShoppingCart, Minus, Plus } from "lucide-react"
+import { ShoppingCart, Minus, Plus, Check } from "lucide-react"
 import { useCartStoreClient } from "@/lib/stores/useCartStore"
 import { Product } from "@/types"
 import { toast } from "sonner"
@@ -11,30 +11,61 @@ import { useRouter } from "next/navigation"
 interface FloatingActionButtonsProps {
   product: Product & { resellerPrice: number }
   resellerId: string
+  username: string
   disabled?: boolean
 }
 
-export function FloatingActionButtons({ product, resellerId, disabled }: FloatingActionButtonsProps) {
+export function FloatingActionButtons({ product, resellerId, username, disabled }: FloatingActionButtonsProps) {
   const [quantity, setQuantity] = useState(1)
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const [isBuyingNow, setIsBuyingNow] = useState(false)
+  const [justAddedToCart, setJustAddedToCart] = useState(false)
   const { addItem, clearCart } = useCartStoreClient()
   const router = useRouter()
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    setIsAddingToCart(true)
+    
+    // Add some delay to show loading state
+    await new Promise(resolve => setTimeout(resolve, 400))
+    
     for (let i = 0; i < quantity; i++) {
       addItem(product, resellerId)
     }
-    toast.success(`Added ${quantity} item${quantity > 1 ? 's' : ''} to cart!`)
+    
+    setIsAddingToCart(false)
+    setJustAddedToCart(true)
+    
+    toast.success(`${quantity} ${product.name} berhasil ditambahkan ke keranjang!`, {
+      duration: 4000,
+      action: {
+        label: 'Lihat Keranjang',
+        onClick: () => {
+          // Navigate to cart or show cart
+        }
+      }
+    })
+    
     setQuantity(1)
+    
+    // Reset the success state after 3 seconds
+    setTimeout(() => setJustAddedToCart(false), 3000)
   }
 
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
+    setIsBuyingNow(true)
+    
+    // Add some delay to show loading state
+    await new Promise(resolve => setTimeout(resolve, 500))
+    
     // Clear cart and add current item
     clearCart()
     for (let i = 0; i < quantity; i++) {
       addItem(product, resellerId)
     }
+    
     // Navigate to checkout
-    router.push(`/${resellerId}/checkout`)
+    router.push(`/${username}/checkout`)
   }
 
   const incrementQuantity = () => {
@@ -95,20 +126,45 @@ export function FloatingActionButtons({ product, resellerId, disabled }: Floatin
                 <Button
                   variant="outline"
                   size="lg"
-                  className="flex-1 h-12 border-gray-300 font-medium"
-                  disabled={disabled}
+                  className={`flex-1 h-12 border-gray-300 font-medium transition-all duration-300 ${
+                    justAddedToCart ? 'border-green-500 text-green-600' : ''
+                  } ${isAddingToCart ? 'scale-95' : 'scale-100'}`}
+                  disabled={disabled || isAddingToCart || isBuyingNow}
                   onClick={handleAddToCart}
                 >
-                  <ShoppingCart className="mr-2 h-4 w-4" />
-                  Keranjang
+                  {isAddingToCart ? (
+                    <>
+                      <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-gray-400 border-t-transparent"></div>
+                      Menambahkan...
+                    </>
+                  ) : justAddedToCart ? (
+                    <>
+                      <Check className="mr-2 h-4 w-4 text-green-600" />
+                      Ditambahkan!
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingCart className="mr-2 h-4 w-4" />
+                      Tambah ke Keranjang
+                    </>
+                  )}
                 </Button>
                 <Button
                   size="lg"
-                  className="flex-1 h-12 bg-green-600 hover:bg-green-700 text-white font-medium"
-                  disabled={disabled}
+                  className={`flex-1 h-12 bg-green-600 hover:bg-green-700 text-white font-medium transition-all duration-300 ${
+                    isBuyingNow ? 'scale-95' : 'scale-100'
+                  }`}
+                  disabled={disabled || isAddingToCart || isBuyingNow}
                   onClick={handleBuyNow}
                 >
-                  Beli Sekarang
+                  {isBuyingNow ? (
+                    <>
+                      <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                      Memproses...
+                    </>
+                  ) : (
+                    'Beli Sekarang'
+                  )}
                 </Button>
               </div>
             </div>

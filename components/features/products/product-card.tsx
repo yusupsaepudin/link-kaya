@@ -33,12 +33,13 @@ export function ProductCard({ product, resellerId, username }: ProductCardProps)
   return (
     <Card className="overflow-hidden group">
       <Link href={`/${username}/produk/${product.slug}`}>
-        <div className="relative aspect-square overflow-hidden">
+        <div className="relative aspect-square overflow-hidden bg-gray-50">
           <Image
             src={product.images[0]}
             alt={product.name}
             fill
-            className="object-cover transition-transform group-hover:scale-105"
+            className="object-cover object-center transition-transform group-hover:scale-105 scale-150"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
           {discountPercentage > 0 && (
             <Badge className="absolute top-2 left-2 bg-red-500 text-white">

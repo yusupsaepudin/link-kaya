@@ -40,7 +40,11 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <SimpleHeader username={username} />
+      <SimpleHeader 
+        username={username} 
+        hideCartIcon={true}
+        hideWishlistIcon={true}
+      />
       
       <div className="bg-white min-h-screen">
         <div className="container-mobile py-12">
