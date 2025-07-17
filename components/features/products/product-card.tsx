@@ -22,7 +22,7 @@ export function ProductCard({ product, resellerId, username }: ProductCardProps)
 
   const handleAddToCart = () => {
     addItem(product, resellerId)
-    toast.success(`${product.name} added to cart`)
+    toast.success(`${product.name} berhasil ditambahkan ke keranjang!`)
   }
 
   // Calculate discount percentage

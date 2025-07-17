@@ -34,7 +34,7 @@ export function CategoryFilter({ categories, selectedCategory, username }: Categ
               : "bg-blue-500 text-white hover:bg-blue-600 border-blue-500"
           }`}
         >
-          All Products
+          Semua Produk
         </Button>
         {categories.map((category) => (
           <Button

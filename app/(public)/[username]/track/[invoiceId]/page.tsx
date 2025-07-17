@@ -72,29 +72,29 @@ export default function TrackingPage({ params }: TrackingPageProps) {
     timeline: [
       {
         status: "pending",
-        title: "Order Placed",
-        description: "Your order has been received",
+        title: "Pesanan Diterima",
+        description: "Pesanan Anda telah diterima",
         date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
         completed: true
       },
       {
         status: "processing",
-        title: "Payment Verified",
-        description: "Payment has been confirmed",
+        title: "Pembayaran Dikonfirmasi",
+        description: "Pembayaran telah dikonfirmasi",
         date: new Date(Date.now() - 1.5 * 24 * 60 * 60 * 1000),
         completed: true
       },
       {
         status: "shipped",
-        title: "Order Shipped",
-        description: "Package handed to courier",
+        title: "Pesanan Dikirim",
+        description: "Paket telah diserahkan ke kurir",
         date: new Date(Date.now() - 0.5 * 24 * 60 * 60 * 1000),
         completed: true
       },
       {
         status: "delivered",
-        title: "Out for Delivery",
-        description: "Package will arrive today",
+        title: "Dalam Pengiriman",
+        description: "Paket akan tiba hari ini",
         date: null,
         completed: false
       }
@@ -140,7 +140,7 @@ export default function TrackingPage({ params }: TrackingPageProps) {
       <div className="bg-white min-h-screen">
         <div className="container-mobile py-8">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold mb-8">Track Your Order</h1>
+            <h1 className="text-3xl font-bold mb-8">Lacak Pesanan Anda</h1>
 
             {/* Search Bar */}
             <Card className="mb-8">
@@ -150,14 +150,14 @@ export default function TrackingPage({ params }: TrackingPageProps) {
                     <Label htmlFor="invoice" className="sr-only">Invoice ID</Label>
                     <Input
                       id="invoice"
-                      placeholder="Enter invoice ID (e.g., INV-123456)"
+                      placeholder="Masukkan ID invoice (contoh: INV-123456)"
                       value={searchInvoice}
                       onChange={(e) => setSearchInvoice(e.target.value)}
                     />
                   </div>
                   <Button type="submit" className="bg-green-500 hover:bg-green-600">
                     <Search className="mr-2 h-4 w-4" />
-                    Track
+                    Lacak
                   </Button>
                 </form>
               </CardContent>
@@ -167,7 +167,7 @@ export default function TrackingPage({ params }: TrackingPageProps) {
             <Card className="mb-6">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>Order Status</CardTitle>
+                  <CardTitle>Status Pesanan</CardTitle>
                   <Badge variant={getStatusColor(orderData.status)}>
                     {orderData.status.charAt(0).toUpperCase() + orderData.status.slice(1)}
                   </Badge>
@@ -176,15 +176,15 @@ export default function TrackingPage({ params }: TrackingPageProps) {
               <CardContent>
                 <div className="grid gap-4 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Invoice ID</span>
+                    <span className="text-muted-foreground">ID Invoice</span>
                     <span className="font-mono">{orderData.invoiceId}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Order Date</span>
+                    <span className="text-muted-foreground">Tanggal Pesanan</span>
                     <span>{format(orderData.createdAt, "dd MMM yyyy, HH:mm")}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total Amount</span>
+                    <span className="text-muted-foreground">Total Pembayaran</span>
                     <span className="font-semibold">{formatCurrency(orderData.total)}</span>
                   </div>
                 </div>
@@ -194,7 +194,7 @@ export default function TrackingPage({ params }: TrackingPageProps) {
             {/* Tracking Timeline */}
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle>Tracking Timeline</CardTitle>
+                <CardTitle>Riwayat Pengiriman</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
@@ -244,20 +244,20 @@ export default function TrackingPage({ params }: TrackingPageProps) {
             {/* Shipping Information */}
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle>Shipping Information</CardTitle>
+                <CardTitle>Informasi Pengiriman</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid gap-4 text-sm">
                   <div>
-                    <p className="text-muted-foreground mb-1">Courier</p>
+                    <p className="text-muted-foreground mb-1">Kurir</p>
                     <p className="font-medium">{orderData.shipping.courier}</p>
                   </div>
                   <div>
-                    <p className="text-muted-foreground mb-1">Tracking Number</p>
+                    <p className="text-muted-foreground mb-1">Nomor Resi</p>
                     <p className="font-mono font-medium">{orderData.shipping.trackingNumber}</p>
                   </div>
                   <div>
-                    <p className="text-muted-foreground mb-1">Estimated Delivery</p>
+                    <p className="text-muted-foreground mb-1">Estimasi Tiba</p>
                     <p className="font-medium">
                       {format(orderData.shipping.estimatedDelivery, "dd MMM yyyy")}
                     </p>
@@ -265,7 +265,7 @@ export default function TrackingPage({ params }: TrackingPageProps) {
                 </div>
                 
                 <div className="border-t pt-4">
-                  <p className="text-sm font-medium mb-2">Delivery Address</p>
+                  <p className="text-sm font-medium mb-2">Alamat Pengiriman</p>
                   <div className="text-sm text-muted-foreground space-y-1">
                     <p>{orderData.shipping.address.name}</p>
                     <p>{orderData.shipping.address.phone}</p>
@@ -279,7 +279,7 @@ export default function TrackingPage({ params }: TrackingPageProps) {
             {/* Order Items */}
             <Card>
               <CardHeader>
-                <CardTitle>Order Items</CardTitle>
+                <CardTitle>Item Pesanan</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">

@@ -34,7 +34,7 @@ export default function CartPage() {
 
   const handleCheckout = () => {
     if (items.length === 0) {
-      toast.error("Your cart is empty")
+      toast.error("Keranjang Anda kosong")
       return
     }
     router.push(`/${username}/checkout`)
@@ -66,14 +66,14 @@ export default function CartPage() {
           <div className="container-mobile py-12">
             <div className="text-center">
               <ShoppingBag className="h-24 w-24 text-muted-foreground mx-auto mb-6" />
-              <h1 className="text-3xl font-bold mb-4">Your cart is empty</h1>
+              <h1 className="text-3xl font-bold mb-4">Keranjang Belanja Kosong</h1>
               <p className="text-muted-foreground mb-8">
-                Looks like you haven&apos;t added anything to your cart yet.
+                Belum ada produk yang ditambahkan ke keranjang Anda.
               </p>
               <Button asChild size="lg" className="bg-green-500 hover:bg-green-600">
                 <Link href={`/${username}`}>
                   <ArrowLeft className="mr-2 h-4 w-4" />
-                  Continue Shopping
+                  Lanjut Belanja
                 </Link>
               </Button>
             </div>
@@ -94,7 +94,7 @@ export default function CartPage() {
       
       <div className="bg-white min-h-screen">
         <div className="container-mobile py-8">
-        <h1 className="text-2xl font-bold mb-6">Shopping Cart ({items.length} items)</h1>
+        <h1 className="text-2xl font-bold mb-6">Keranjang Belanja ({items.length} produk)</h1>
             
         <div className="space-y-4 mb-6">
                 {items.map((item) => (
@@ -148,7 +148,7 @@ export default function CartPage() {
                                 {formatCurrency(item.product.resellerPrice * item.quantity)}
                               </div>
                               <div className="text-sm text-muted-foreground">
-                                {formatCurrency(item.product.resellerPrice)} each
+                                {formatCurrency(item.product.resellerPrice)} per item
                               </div>
                             </div>
                           </div>
@@ -171,7 +171,7 @@ export default function CartPage() {
         {/* Order Summary */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+            <h2 className="text-xl font-semibold mb-4">Ringkasan Pesanan</h2>
                     
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between text-sm">
@@ -179,8 +179,8 @@ export default function CartPage() {
                         <span>{formatCurrency(getTotal())}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span>Shipping</span>
-                        <span className="text-green-600">Free</span>
+                        <span>Ongkir</span>
+                        <span className="text-green-600">Gratis</span>
                       </div>
                     </div>
                     
@@ -189,11 +189,11 @@ export default function CartPage() {
                     <div className="space-y-4 mb-6">
                       <div className="flex gap-2">
                         <Input
-                          placeholder="Promo code"
+                          placeholder="Kode promo"
                           value={promoCode}
                           onChange={(e) => setPromoCode(e.target.value)}
                         />
-                        <Button variant="outline">Apply</Button>
+                        <Button variant="outline">Gunakan</Button>
                       </div>
                     </div>
                     
@@ -207,12 +207,9 @@ export default function CartPage() {
                       size="lg"
                       onClick={handleCheckout}
                     >
-                      Proceed to Checkout
+                      Lanjut ke Checkout
                     </Button>
-                    
-            <p className="text-xs text-muted-foreground text-center mt-4">
-              Secure checkout powered by Lynk
-            </p>
+
           </CardContent>
         </Card>
         </div>

@@ -71,7 +71,7 @@ export function ImprovedProductCard({ product, resellerId, username }: ImprovedP
         </div>
       </Link>
       
-      <CardContent className="px-4 pb-4 pt-3">
+      <CardContent className="px-4 pb-4 pt-2">
         <Link href={`/${username}/produk/${product.slug}`}>
           <h3 className="font-semibold text-sm mb-1 line-clamp-2 hover:text-primary transition-colors">
             {product.name}

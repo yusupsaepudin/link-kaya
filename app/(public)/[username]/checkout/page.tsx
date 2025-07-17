@@ -57,7 +57,7 @@ export default function CheckoutPage() {
     // Clear cart
     clearCart()
     
-    toast.success("Order placed successfully!")
+    toast.success("Pesanan berhasil dibuat!")
     router.push(`/${username}/checkout/order/${orderId}`)
   }
 
@@ -87,16 +87,15 @@ export default function CheckoutPage() {
           {/* Customer Information */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Customer Information</CardTitle>
+              <CardTitle className="text-lg">Informasi Pelanggan</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
+                <Label htmlFor="fullName">Nama Lengkap</Label>
                 <Input
                   id="fullName"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  required
                   disabled={isProcessing}
                 />
               </div>
@@ -107,19 +106,17 @@ export default function CheckoutPage() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
                   disabled={isProcessing}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number (WhatsApp)</Label>
+                <Label htmlFor="phone">Nomor WhatsApp</Label>
                 <Input
                   id="phone"
                   type="tel"
                   placeholder="+62"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  required
                   disabled={isProcessing}
                 />
               </div>
@@ -129,49 +126,46 @@ export default function CheckoutPage() {
           {/* Shipping Address */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Shipping Address</CardTitle>
+              <CardTitle className="text-lg">Alamat Pengiriman</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="address">Street Address</Label>
+                <Label htmlFor="address">Alamat Lengkap</Label>
                 <Input
                   id="address"
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                   placeholder="Jl. Example No. 123"
-                  required
                   disabled={isProcessing}
                 />
               </div>
               <div className="grid gap-4 grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="city">City</Label>
+                  <Label htmlFor="city">Kota</Label>
                   <Input
                     id="city"
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    required
                     disabled={isProcessing}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="postalCode">Postal Code</Label>
+                  <Label htmlFor="postalCode">Kode Pos</Label>
                   <Input
                     id="postalCode"
                     value={formData.postalCode}
                     onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                    required
                     disabled={isProcessing}
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="notes">Delivery Notes (Optional)</Label>
+                <Label htmlFor="notes">Catatan Pengiriman (Opsional)</Label>
                 <Input
                   id="notes"
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  placeholder="Apartment, suite, etc."
+                  placeholder="Apartemen, nomor unit, dll."
                   disabled={isProcessing}
                 />
               </div>
@@ -181,7 +175,7 @@ export default function CheckoutPage() {
           {/* Payment Method */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Payment Method</CardTitle>
+              <CardTitle className="text-lg">Metode Pembayaran</CardTitle>
             </CardHeader>
             <CardContent>
               <RadioGroup
@@ -195,10 +189,10 @@ export default function CheckoutPage() {
                     <div className="flex-1">
                       <Label htmlFor="transfer" className="flex items-center gap-2 cursor-pointer">
                         <CreditCard className="h-4 w-4" />
-                        Bank Transfer
+                        Transfer Bank
                       </Label>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Pay via bank transfer to complete your order
+                        Bayar melalui transfer bank untuk menyelesaikan pesanan
                       </p>
                     </div>
                   </div>
@@ -207,10 +201,10 @@ export default function CheckoutPage() {
                     <div className="flex-1">
                       <Label htmlFor="cod" className="flex items-center gap-2 cursor-pointer">
                         <Smartphone className="h-4 w-4" />
-                        Cash on Delivery
+                        Bayar di Tempat (COD)
                       </Label>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Pay when you receive your order
+                        Bayar saat menerima pesanan
                       </p>
                     </div>
                   </div>
@@ -222,7 +216,7 @@ export default function CheckoutPage() {
           {/* Order Summary */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Order Summary</CardTitle>
+              <CardTitle className="text-lg">Ringkasan Pesanan</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -239,7 +233,7 @@ export default function CheckoutPage() {
                     <div className="flex-1">
                       <h4 className="font-medium text-sm">{item.product.name}</h4>
                       <p className="text-sm text-muted-foreground">
-                        Qty: {item.quantity} × {formatCurrency(item.product.resellerPrice)}
+                        Jumlah: {item.quantity} × {formatCurrency(item.product.resellerPrice)}
                       </p>
                     </div>
                     <div className="text-sm font-medium">
@@ -256,8 +250,8 @@ export default function CheckoutPage() {
                     <span>{formatCurrency(getTotal())}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span>Shipping</span>
-                    <span className="text-green-600">Free</span>
+                    <span>Ongkir</span>
+                    <span className="text-green-600">Gratis</span>
                   </div>
                   <div className="flex justify-between font-semibold">
                     <span>Total</span>
@@ -275,7 +269,7 @@ export default function CheckoutPage() {
             disabled={isProcessing}
           >
             {isProcessing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Place Order
+            Buat Pesanan
           </Button>
         </form>
         </div>

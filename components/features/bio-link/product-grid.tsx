@@ -30,8 +30,14 @@ export function ProductGrid({ products, resellerId, username }: ProductGridProps
 
   if (activeProducts.length === 0) {
     return (
-      <div className="text-center py-12">
-        <p className="text-muted-foreground">No products available</p>
+      <div className="text-center py-20 min-h-[400px] flex flex-col items-center justify-center">
+        <div className="w-20 h-20 mx-auto mb-4 opacity-30">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-full h-full">
+            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6.28M17 13H7" />
+          </svg>
+        </div>
+        <p className="text-muted-foreground text-lg mb-2">Belum ada produk tersedia</p>
+        <p className="text-muted-foreground text-sm">Produk akan segera ditambahkan</p>
       </div>
     )
   }

@@ -87,19 +87,19 @@ export function SimpleProductDetail({ product, resellerId }: SimpleProductDetail
 
         {/* Product Details */}
         <div className="space-y-4">
-          <h3 className="font-semibold">Product Details</h3>
+          <h3 className="font-semibold">Detail Produk</h3>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <span className="text-muted-foreground">Brand:</span>
               <p className="font-medium">{product.brandName}</p>
             </div>
             <div>
-              <span className="text-muted-foreground">Category:</span>
+              <span className="text-muted-foreground">Kategori:</span>
               <p className="font-medium">{product.categoryName}</p>
             </div>
             <div>
-              <span className="text-muted-foreground">Stock:</span>
-              <p className="font-medium">{product.stock} available</p>
+              <span className="text-muted-foreground">Stok:</span>
+              <p className="font-medium">{product.stock} tersedia</p>
             </div>
             <div>
               <span className="text-muted-foreground">SKU:</span>
@@ -112,7 +112,7 @@ export function SimpleProductDetail({ product, resellerId }: SimpleProductDetail
           <>
             <Separator />
             <div className="space-y-4">
-              <h3 className="font-semibold">Specifications</h3>
+              <h3 className="font-semibold">Spesifikasi</h3>
               <div className="space-y-2">
                 {Object.entries(product.specifications).map(([key, value]) => (
                   <div key={key} className="flex justify-between text-sm">

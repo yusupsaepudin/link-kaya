@@ -112,13 +112,6 @@ export default function SignInPage() {
               Create one
             </Link>
           </div>
-
-          <div className="mt-6 space-y-2 text-xs text-muted-foreground">
-            <p className="font-semibold">Demo accounts:</p>
-            <p>Reseller: sarah@example.com</p>
-            <p>Brand: nike@example.com</p>
-            <p>Password: password (for all)</p>
-          </div>
         </CardContent>
       </Card>
     </>

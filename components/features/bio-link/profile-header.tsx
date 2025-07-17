@@ -27,7 +27,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
     } else {
       // Fallback to clipboard
       await navigator.clipboard.writeText(window.location.href)
-      toast.success("Link copied to clipboard!")
+      toast.success("Link berhasil disalin!")
     }
   }
 

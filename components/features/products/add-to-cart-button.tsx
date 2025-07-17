@@ -17,7 +17,7 @@ export function AddToCartButton({ product, resellerId, className }: AddToCartBut
 
   const handleAddToCart = () => {
     addItem(product, resellerId)
-    toast.success(`${product.name} added to cart`)
+    toast.success(`${product.name} berhasil ditambahkan ke keranjang!`)
   }
 
   return (
