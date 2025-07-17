@@ -114,7 +114,8 @@ export function ImprovedProductCard({ product, resellerId, username }: ImprovedP
           ) : (
             <>
               <ShoppingCart className="mr-2 h-4 w-4" />
-              Tambah ke Keranjang
+              <span className="hidden md:block">Tambahkan ke Keranjang</span>
+              <span className="block md:hidden">Tambah</span>
             </>
           )}
         </Button>
