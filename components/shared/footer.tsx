@@ -90,7 +90,7 @@ export function Footer() {
           <div className="mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-gray-500 text-sm">
-                &copy; 2024 <span className="font-semibold text-mediakaya-blue">BioLink</span> by MediaKaya Network. All rights reserved.
+                &copy; 2024 <span className="font-semibold text-mediakaya-blue">BioLink</span>. All rights reserved.
               </p>
               <p className="text-gray-400 text-xs flex items-center gap-1">
                 Made with <span className="text-red-500 text-base">❤️</span> in Indonesia
