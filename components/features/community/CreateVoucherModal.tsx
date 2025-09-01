@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { QrCode, Calendar, Percent } from 'lucide-react'
+import { Percent } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -64,8 +64,9 @@ export function CreateVoucherModal({ isOpen, onClose }: CreateVoucherModalProps)
 
   const onSubmit = async (data: VoucherFormData) => {
     try {
-      const voucher = createVoucher({
+      createVoucher({
         ...data,
+        code: data.code || `VOUCHER-${Date.now()}`,
         validFrom: new Date(data.validFrom),
         validUntil: data.validUntil ? new Date(data.validUntil) : undefined,
         createdBy: 'current-user-id', // This would come from user context
@@ -77,7 +78,7 @@ export function CreateVoucherModal({ isOpen, onClose }: CreateVoucherModalProps)
       toast.success('Voucher created successfully!')
       reset()
       onClose()
-    } catch (error) {
+    } catch (_error) {
       toast.error('Failed to create voucher')
     }
   }

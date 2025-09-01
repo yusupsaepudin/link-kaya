@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Share2, QrCode, Link, MessageCircle, Facebook, Twitter, Copy, Check } from 'lucide-react'
+import { Share2, QrCode, Link, Copy, Check } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -36,7 +36,7 @@ interface ShareProductModalProps {
   resellerId: string
 }
 
-export function ShareProductModal({ isOpen, onClose, product, resellerId }: ShareProductModalProps) {
+export function ShareProductModal({ isOpen, onClose, product, resellerId: _resellerId }: ShareProductModalProps) {
   const [shareUrl, setShareUrl] = useState('')
   const [copied, setCopied] = useState(false)
   const [activeTab, setActiveTab] = useState('qr')
@@ -57,6 +57,7 @@ export function ShareProductModal({ isOpen, onClose, product, resellerId }: Shar
         shareUrl: url
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, product.id, currentUser])
 
   const handleCopyLink = async () => {
@@ -65,13 +66,12 @@ export function ShareProductModal({ isOpen, onClose, product, resellerId }: Shar
       setCopied(true)
       toast.success('Link copied to clipboard!')
       setTimeout(() => setCopied(false), 2000)
-    } catch (err) {
+    } catch (_err) {
       toast.error('Failed to copy link')
     }
   }
 
   const shareTitle = `Check out ${product.name}`
-  const shareDescription = product.description.substring(0, 100) + '...'
 
   const trackSocialShare = (platform: string) => {
     if (currentUser) {
@@ -125,7 +125,7 @@ export function ShareProductModal({ isOpen, onClose, product, resellerId }: Shar
               <CardContent className="pt-6">
                 <p className="text-sm text-muted-foreground text-center">
                   This QR code contains your unique referral link. 
-                  You'll earn commission when someone makes a purchase through your link.
+                  You&apos;ll earn commission when someone makes a purchase through your link.
                 </p>
               </CardContent>
             </Card>

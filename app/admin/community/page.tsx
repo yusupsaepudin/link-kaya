@@ -1,13 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Users, Share2, QrCode, TrendingUp, Plus, Eye, DollarSign, UserPlus } from 'lucide-react'
+import { Share2, QrCode, TrendingUp, Plus, DollarSign } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { formatRupiah } from '@/lib/utils'
 import { useCommunityStore } from '@/lib/stores/useCommunityStore'
-import { useWalletStore } from '@/lib/stores/useWalletStore'
 import { VoucherCard } from '@/components/features/community/VoucherCard'
 import { CreateVoucherModal } from '@/components/features/community/CreateVoucherModal'
 import { ShareStatsCard } from '@/components/features/community/ShareStatsCard'
@@ -16,12 +15,10 @@ export default function CommunityPage() {
   const [showCreateVoucherModal, setShowCreateVoucherModal] = useState(false)
   const { 
     communityShares, 
-    vouchers, 
-    shareTracking,
+    vouchers,
     calculateCommunityEarnings,
     updateVoucherStatus 
   } = useCommunityStore()
-  const { walletInfo } = useWalletStore()
 
   // Calculate statistics
   const totalShares = communityShares.length

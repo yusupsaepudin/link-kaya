@@ -4,6 +4,8 @@ import { SimpleHeader } from "@/components/features/bio-link/simple-header"
 import { ProfileSection } from "@/components/features/bio-link/profile-section"
 import { ProductGrid } from "@/components/features/bio-link/product-grid"
 import { CategoryFilter } from "@/components/features/bio-link/category-filter"
+import { CommunityVoucherSection } from "@/components/features/bio-link/community-voucher-section"
+import { CommunityProductShowcase } from "@/components/features/bio-link/community-product-showcase"
 import { categories } from "@/lib/mock/products"
 
 interface ProfilePageProps {
@@ -39,6 +41,10 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
       <div className="bg-white">
         <div className="container-mobile">
           <ProfileSection user={user} />
+          
+          <CommunityVoucherSection resellerId={user.id} />
+          
+          <CommunityProductShowcase resellerId={user.id} username={username} />
           
           {products.length > 0 && (
             <div className="pb-8">

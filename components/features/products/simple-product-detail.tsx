@@ -6,6 +6,8 @@ import { Separator } from "@/components/ui/separator"
 import Image from "next/image"
 import { formatCurrency } from "@/lib/utils/formatters"
 import { Product } from "@/types"
+import { CommunityProductBanner } from "./community-product-banner"
+import { usePathname } from "next/navigation"
 
 interface SimpleProductDetailProps {
   product: Product & { resellerPrice: number }
@@ -13,6 +15,8 @@ interface SimpleProductDetailProps {
 }
 
 export function SimpleProductDetail({ product, resellerId: _resellerId }: SimpleProductDetailProps) {
+  const pathname = usePathname()
+  const username = pathname?.split('/')[1] || ''
   const [selectedImage, setSelectedImage] = useState(0)
 
   // Calculate discount percentage
@@ -22,6 +26,14 @@ export function SimpleProductDetail({ product, resellerId: _resellerId }: Simple
 
   return (
     <div className="space-y-6">
+      {/* Community Product Banner */}
+      {product.isCommunityExclusive && (
+        <CommunityProductBanner 
+          product={product} 
+          username={username}
+        />
+      )}
+      
       {/* Product Images */}
       <div className="space-y-4">
         <div className="aspect-square relative overflow-hidden rounded-lg border bg-gray-50">

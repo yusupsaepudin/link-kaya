@@ -13,6 +13,10 @@ export function formatCurrency(amount: number): string {
   }).format(amount)
 }
 
+export function formatRupiah(amount: number): string {
+  return formatCurrency(amount)
+}
+
 export function calculateMarkupPercentage(basePrice: number, sellingPrice: number): number {
   return Math.round(((sellingPrice - basePrice) / basePrice) * 100)
 }

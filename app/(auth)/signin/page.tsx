@@ -65,8 +65,19 @@ export default function SignInPage() {
       <Card className="border-0 shadow-lg">
         <CardHeader className="space-y-1">
           <div className="flex items-center space-x-2 mb-4">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-600 to-pink-600" />
-            <span className="font-bold text-xl">BioLink</span>
+            <div className="flex items-center">
+              <span className="text-2xl font-black">
+                <span className="text-mediakaya-blue">M</span>
+                <span className="text-mediakaya-blue">K</span>
+              </span>
+              <div className="ml-3 flex flex-col leading-none">
+                <span className="text-sm font-bold">
+                  <span className="text-mediakaya-blue">MEDIA</span>
+                  <span className="text-mediakaya-red">KAYA</span>
+                </span>
+                <span className="text-xs font-semibold text-mediakaya-blue tracking-wider">NETWORK</span>
+              </div>
+            </div>
           </div>
           <CardTitle className="text-2xl">Welcome back</CardTitle>
           <CardDescription>

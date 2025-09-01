@@ -25,7 +25,7 @@ export default async function OrderConfirmationPage({ params }: OrderConfirmatio
     bankAccount: {
       bank: "BCA",
       accountNumber: "1234567890",
-      accountName: "PT BioLink Indonesia"
+      accountName: "PT MediaKaya Network Indonesia"
     },
     customerInfo: {
       name: "John Doe",

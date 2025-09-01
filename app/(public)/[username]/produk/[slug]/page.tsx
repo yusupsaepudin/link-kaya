@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { getUserByUsername, getResellerProducts } from "@/lib/mock"
 import { getProductBySlug } from "@/lib/mock/products"
+import { communityProducts } from "@/lib/mock/community-products"
 import { SimpleProductDetail } from "@/components/features/products/simple-product-detail"
 import { FloatingActionButtons } from "@/components/features/products/floating-action-buttons"
 import { SimpleHeader } from "@/components/features/bio-link/simple-header"
@@ -20,21 +21,40 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound()
   }
 
-  const product = getProductBySlug(slug)
+  // Try to find product in regular products first
+  let product = getProductBySlug(slug)
+  
+  // If not found, check community products
+  if (!product) {
+    const communityProduct = communityProducts.find(p => p.slug === slug)
+    if (communityProduct) {
+      product = communityProduct
+    }
+  }
+  
   if (!product) {
     notFound()
   }
 
-  const resellerProducts = getResellerProducts(user.id)
-  const resellerProduct = resellerProducts.find(rp => rp.productId === product.id)
-  
-  if (!resellerProduct || !resellerProduct.isActive) {
-    notFound()
-  }
-
-  const productWithPrice = {
-    ...product,
-    resellerPrice: resellerProduct.sellingPrice
+  // For community products, use base price as selling price
+  let productWithPrice
+  if (product.isCommunityExclusive) {
+    productWithPrice = {
+      ...product,
+      resellerPrice: product.basePrice
+    }
+  } else {
+    const resellerProducts = getResellerProducts(user.id)
+    const resellerProduct = resellerProducts.find(rp => rp.productId === product.id)
+    
+    if (!resellerProduct || !resellerProduct.isActive) {
+      notFound()
+    }
+    
+    productWithPrice = {
+      ...product,
+      resellerPrice: resellerProduct.sellingPrice
+    }
   }
 
   return (

@@ -104,7 +104,7 @@ export const useWalletStore = create<WalletState>()(
           : state.pendingPayouts
       })),
 
-      getTransactionHistory: (userId) => {
+      getTransactionHistory: (_userId) => {
         return get().transactions.filter(t => t.status === 'completed')
       },
 

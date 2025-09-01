@@ -20,8 +20,10 @@ export interface Product {
   categoryName: string
   tags: string[]
   stock: number
-  sold: number
+  sold?: number
   isActive: boolean
+  isCommunityExclusive?: boolean
+  requiredVoucherType?: 'event' | 'product' | 'discount'
   specifications?: Record<string, string>
   createdAt: Date
   updatedAt: Date

@@ -12,7 +12,7 @@ export function Footer() {
             {/* About */}
             <div className="md:col-span-1">
               <div className="flex items-center space-x-3 mb-6">
-                <span className="font-extrabold text-2xl text-gray-900 tracking-tight">BioLink</span>
+                <span className="font-extrabold text-2xl text-gray-900 tracking-tight">Link Kaya</span>
               </div>
               <p className="text-gray-600 text-base leading-relaxed mb-8 max-w-xs">
                 Platform bio link untuk reseller.<br />
@@ -90,7 +90,7 @@ export function Footer() {
           <div className="mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-gray-500 text-sm">
-                &copy; 2024 <span className="font-semibold text-mediakaya-blue">BioLink</span>. All rights reserved.
+                &copy; 2024 <span className="font-semibold text-mediakaya-blue">Link Kaya</span>. All rights reserved.
               </p>
               <p className="text-gray-400 text-xs flex items-center gap-1">
                 Made with <span className="text-red-500 text-base">❤️</span> in Indonesia

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BioLink Reseller - Marketplace for Bio Link Stores",
+  title: "MediaKaya Network - Marketplace for Bio Link Stores",
   description: "The ultimate bio-link reseller platform. Build your online store, sell products with markup, and earn commissions.",
 };
 

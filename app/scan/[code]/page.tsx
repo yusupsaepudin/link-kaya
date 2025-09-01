@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
-import { formatRupiah } from '@/lib/utils'
 import { useCommunityStore } from '@/lib/stores/useCommunityStore'
 import { useWalletStore } from '@/lib/stores/useWalletStore'
 import { toast } from 'sonner'
@@ -17,9 +16,20 @@ export default function VoucherScanPage() {
   const router = useRouter()
   const [isProcessing, setIsProcessing] = useState(true)
   const [scanResult, setScanResult] = useState<'success' | 'failed' | 'expired' | null>(null)
-  const [voucherDetails, setVoucherDetails] = useState<any>(null)
+  const [voucherDetails, setVoucherDetails] = useState<{
+    id: string
+    code: string
+    type: string
+    communityName: string
+    productName?: string
+    productId?: string
+    commissionPercentage: number
+    validUntil?: string
+    maxRedemptions?: number
+    currentRedemptions: number
+  } | null>(null)
   
-  const { getVoucherByCode, redeemVoucher, setActiveVoucher } = useCommunityStore()
+  const { getVoucherByCode, redeemVoucher } = useCommunityStore()
   const { processCommission } = useWalletStore()
 
   useEffect(() => {
@@ -55,7 +65,10 @@ export default function VoucherScanPage() {
         const redeemedVoucher = redeemVoucher(voucherCode)
         
         if (redeemedVoucher) {
-          setVoucherDetails(redeemedVoucher)
+          setVoucherDetails({
+            ...redeemedVoucher,
+            validUntil: redeemedVoucher.validUntil?.toISOString()
+          })
           setScanResult('success')
           
           // Process community commission
@@ -77,7 +90,7 @@ export default function VoucherScanPage() {
           setScanResult('failed')
           toast.error('Failed to redeem voucher')
         }
-      } catch (error) {
+      } catch (_error) {
         setScanResult('failed')
         toast.error('An error occurred while processing the voucher')
       } finally {
@@ -86,6 +99,7 @@ export default function VoucherScanPage() {
     }
     
     processVoucherScan()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.code])
 
   if (isProcessing) {

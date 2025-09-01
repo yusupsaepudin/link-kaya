@@ -62,14 +62,17 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
       )}>
         <div className="h-full flex flex-col">
           {/* Logo */}
-          <div className="p-6 border-b bg-gradient-to-r from-primary/5 to-primary/10">
+          <div className="p-6 border-b bg-mediakaya-blue/5">
             <Link href="/admin/dashboard" className="flex items-center space-x-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-lg">R</span>
+              <div className="h-10 w-10 rounded-xl bg-mediakaya-blue flex items-center justify-center shadow-lg text-white">
+                <span className="font-bold text-lg">MK</span>
               </div>
               <div>
-                <span className="font-bold text-xl text-foreground">Reseller Hub</span>
-                <p className="text-xs text-muted-foreground">Admin Dashboard</p>
+                <span className="font-bold text-xl">
+                  <span className="text-mediakaya-blue">Media</span>
+                  <span className="text-mediakaya-red">Kaya</span>
+                </span>
+                <p className="text-xs text-muted-foreground">Reseller Dashboard</p>
               </div>
             </Link>
           </div>
@@ -77,7 +80,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           {/* User Info */}
           <div className="p-4 border-b bg-muted/30">
             <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-primary-foreground font-semibold shadow-md">
+              <div className="h-12 w-12 rounded-full bg-mediakaya-blue flex items-center justify-center text-white font-semibold shadow-md">
                 {currentUser?.displayName.charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
@@ -151,8 +154,13 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
               {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
             <Link href="/admin/dashboard" className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-600 to-pink-600" />
-              <span className="font-bold">Reseller</span>
+              <div className="h-8 w-8 rounded-lg bg-mediakaya-blue flex items-center justify-center text-white font-bold text-xs">
+                MK
+              </div>
+              <span className="font-bold">
+                <span className="text-mediakaya-blue">Media</span>
+                <span className="text-mediakaya-red">Kaya</span>
+              </span>
             </Link>
             <div className="w-10" /> {/* Spacer for balance */}
           </div>

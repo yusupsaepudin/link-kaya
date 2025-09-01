@@ -11,24 +11,34 @@ export default function HomePage() {
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-20 lg:py-32">
+        <section className="relative py-20 lg:py-32 bg-gradient-to-br from-mediakaya-blue/5 via-white to-mediakaya-red/5">
           <div className="container">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-                Buat Bio Link Store Anda & Mulai Jualan Online
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-mediakaya-blue/10 text-mediakaya-blue text-sm font-medium mb-6">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mediakaya-blue opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-mediakaya-blue"></span>
+                </span>
+                Platform Reseller Terpercaya
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                <span className="text-mediakaya-blue">Buat Bio Link Store</span>
+                <br />
+                <span className="text-gray-900">& Mulai </span>
+                <span className="text-mediakaya-red">Jualan Online</span>
               </h1>
               <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
                 Platform sederhana untuk membuat toko online melalui bio link. 
                 Pilih produk, atur harga, dan mulai berjualan dengan mudah.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-mediakaya-blue hover:bg-mediakaya-blue-dark" asChild>
+                <Button size="lg" className="bg-mediakaya-blue hover:bg-mediakaya-blue-dark text-white shadow-lg shadow-mediakaya-blue/25" asChild>
                   <Link href="/register">
-                    Mulai Berjualan
+                    Mulai Berjualan Gratis
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" asChild>
+                <Button size="lg" variant="outline" className="border-mediakaya-red text-mediakaya-red hover:bg-mediakaya-red hover:text-white" asChild>
                   <Link href="/sarahbeauty">Lihat Contoh Toko</Link>
                 </Button>
               </div>
@@ -37,7 +47,7 @@ export default function HomePage() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gradient-to-r from-mediakaya-blue/5 to-mediakaya-red/5">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-2xl font-semibold mb-4 text-gray-900">Mengapa Memilih Bio Link Store?</h2>
@@ -46,21 +56,21 @@ export default function HomePage() {
               </p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
                 <div>
-                  <div className="w-12 h-12 bg-mediakaya-blue/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <div className="w-12 h-12 bg-mediakaya-blue/10 rounded-full flex items-center justify-center mx-auto mb-3 ring-2 ring-mediakaya-blue/20">
                     <span className="text-2xl">📱</span>
                   </div>
                   <div className="font-semibold text-gray-900">Mudah Digunakan</div>
                   <div className="text-sm text-gray-600">Setup dalam hitungan menit</div>
                 </div>
                 <div>
-                  <div className="w-12 h-12 bg-mediakaya-blue/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <div className="w-12 h-12 bg-mediakaya-blue/10 rounded-full flex items-center justify-center mx-auto mb-3 ring-2 ring-mediakaya-blue/20">
                     <span className="text-2xl">💰</span>
                   </div>
                   <div className="font-semibold text-gray-900">Atur Harga Sendiri</div>
                   <div className="text-sm text-gray-600">Kontrol penuh atas profit</div>
                 </div>
                 <div>
-                  <div className="w-12 h-12 bg-mediakaya-blue/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <div className="w-12 h-12 bg-mediakaya-blue/10 rounded-full flex items-center justify-center mx-auto mb-3 ring-2 ring-mediakaya-blue/20">
                     <span className="text-2xl">🚀</span>
                   </div>
                   <div className="font-semibold text-gray-900">Tanpa Modal Besar</div>
@@ -82,8 +92,8 @@ export default function HomePage() {
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-white border-2 border-mediakaya-blue flex items-center justify-center mx-auto mb-6">
-                  <span className="text-xl font-bold text-mediakaya-blue">1</span>
+                <div className="w-16 h-16 rounded-full bg-mediakaya-blue text-white flex items-center justify-center mx-auto mb-6 shadow-lg shadow-mediakaya-blue/25">
+                  <span className="text-xl font-bold">1</span>
                 </div>
                 <h3 className="font-semibold mb-3 text-gray-900">Buat Akun & Setup Toko</h3>
                 <p className="text-gray-600">
@@ -91,8 +101,8 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-white border-2 border-mediakaya-blue flex items-center justify-center mx-auto mb-6">
-                  <span className="text-xl font-bold text-mediakaya-blue">2</span>
+                <div className="w-16 h-16 rounded-full bg-mediakaya-blue text-white flex items-center justify-center mx-auto mb-6 shadow-lg shadow-mediakaya-blue/25">
+                  <span className="text-xl font-bold">2</span>
                 </div>
                 <h3 className="font-semibold mb-3 text-gray-900">Pilih & Tambah Produk</h3>
                 <p className="text-gray-600">
@@ -100,8 +110,8 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-white border-2 border-mediakaya-blue flex items-center justify-center mx-auto mb-6">
-                  <span className="text-xl font-bold text-mediakaya-blue">3</span>
+                <div className="w-16 h-16 rounded-full bg-mediakaya-red text-white flex items-center justify-center mx-auto mb-6 shadow-lg shadow-mediakaya-red/25">
+                  <span className="text-xl font-bold">3</span>
                 </div>
                 <h3 className="font-semibold mb-3 text-gray-900">Share & Mulai Jualan</h3>
                 <p className="text-gray-600">
@@ -113,7 +123,7 @@ export default function HomePage() {
         </section>
 
         {/* Features */}
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-white">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <h2 className="text-3xl font-bold mb-4 text-gray-900">Fitur yang Membantu Anda</h2>
@@ -148,13 +158,13 @@ export default function HomePage() {
                 Bergabunglah dengan reseller lainnya yang sudah memulai bisnis online mereka
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-mediakaya-blue hover:bg-mediakaya-blue-dark" asChild>
+                <Button size="lg" className="bg-mediakaya-gradient-3 hover:bg-mediakaya-blue-dark text-white shadow-lg" asChild>
                   <Link href="/register">
                     Daftar Sekarang
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" asChild>
+                <Button size="lg" variant="outline" className="border-mediakaya-red text-mediakaya-red hover:bg-mediakaya-red hover:text-white" asChild>
                   <Link href="/sarahbeauty">Lihat Demo Toko</Link>
                 </Button>
               </div>

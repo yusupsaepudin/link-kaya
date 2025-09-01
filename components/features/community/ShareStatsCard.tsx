@@ -1,6 +1,6 @@
 'use client'
 
-import { Eye, MousePointer, ShoppingBag, TrendingUp, Share2, QrCode, Link } from 'lucide-react'
+import { Eye, ShoppingBag, TrendingUp, Share2, QrCode, Link } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { formatRupiah } from '@/lib/utils'

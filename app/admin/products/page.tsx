@@ -36,7 +36,14 @@ export default function AdminProductsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedTab, setSelectedTab] = useState("active")
   const [shareModalOpen, setShareModalOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<any>(null)
+  const [selectedProduct, setSelectedProduct] = useState<{
+    id: string
+    name: string
+    description: string
+    images: string[]
+    basePrice: number
+    sellingPrice: number
+  } | null>(null)
 
   // Get reseller's products
   const resellerProducts = currentUser ? getResellerProducts(currentUser.id) : []
@@ -53,12 +60,22 @@ export default function AdminProductsPage() {
     toast.success("Product removed from your store")
   }
 
-  const handleShareProduct = (resellerProduct: any) => {
+  const handleShareProduct = (resellerProduct: {
+    productId: string
+    product?: {
+      name?: string
+      description?: string
+      images?: string[]
+      basePrice?: number
+    }
+    sellingPrice: number
+  }) => {
     setSelectedProduct({
       id: resellerProduct.productId,
       name: resellerProduct.product?.name || '',
       description: resellerProduct.product?.description || '',
       images: resellerProduct.product?.images || [],
+      basePrice: resellerProduct.product?.basePrice || 0,
       sellingPrice: resellerProduct.sellingPrice
     })
     setShareModalOpen(true)

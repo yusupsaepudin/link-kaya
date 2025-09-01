@@ -13,7 +13,19 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="font-bold text-xl">BioLink</span>
+          <div className="flex items-center">
+            <span className="text-2xl font-black">
+              <span className="text-mediakaya-blue">M</span>
+              <span className="text-mediakaya-blue">K</span>
+            </span>
+            <div className="ml-3 flex flex-col leading-none">
+              <span className="text-sm font-bold">
+                <span className="text-mediakaya-blue">MEDIA</span>
+                <span className="text-mediakaya-red">KAYA</span>
+              </span>
+              <span className="text-xs font-semibold text-mediakaya-blue tracking-wider">NETWORK</span>
+            </div>
+          </div>
         </Link>
 
         

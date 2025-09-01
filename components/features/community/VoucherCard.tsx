@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { QRCodeGenerator } from './QRCodeGenerator'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { formatRupiah } from '@/lib/utils'
 
 interface VoucherCardProps {
   voucher: {
