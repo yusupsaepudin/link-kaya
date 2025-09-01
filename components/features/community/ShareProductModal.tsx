@@ -190,7 +190,6 @@ export function ShareProductModal({ isOpen, onClose, product, resellerId: _resel
 
               <FacebookShareButton
                 url={shareUrl}
-                quote={shareTitle}
                 hashtag="#biolink"
                 className="w-full"
                 onClick={() => trackSocialShare('Facebook')}

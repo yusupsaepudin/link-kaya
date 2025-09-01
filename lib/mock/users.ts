@@ -21,8 +21,10 @@ export const mockUsers: UserProfile[] = [
     resellerInfo: {
       tier: 'gold',
       commission: 25,
+      communityCommission: 5,
       totalSales: 450,
       totalEarnings: 12500000,
+      totalCommunityEarnings: 2500000,
       joinedAt: new Date('2023-01-01'),
       payoutMethod: 'bank',
       payoutDetails: { bankName: 'BCA', accountNumber: '1234567890' }
@@ -48,8 +50,10 @@ export const mockUsers: UserProfile[] = [
     resellerInfo: {
       tier: 'silver',
       commission: 20,
+      communityCommission: 3,
       totalSales: 234,
       totalEarnings: 8900000,
+      totalCommunityEarnings: 1340000,
       joinedAt: new Date('2023-03-15')
     },
     createdAt: new Date('2023-03-15'),
@@ -70,8 +74,10 @@ export const mockUsers: UserProfile[] = [
     resellerInfo: {
       tier: 'bronze',
       commission: 15,
+      communityCommission: 2,
       totalSales: 123,
       totalEarnings: 4500000,
+      totalCommunityEarnings: 900000,
       joinedAt: new Date('2023-06-01')
     },
     createdAt: new Date('2023-06-01'),

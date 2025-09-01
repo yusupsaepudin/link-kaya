@@ -111,7 +111,7 @@ export function AddProductDialog({ product, open, onOpenChange }: AddProductDial
           </div>
 
           {/* Success Indicator */}
-          {product.sold > 50 && (
+          {product.sold && product.sold > 50 && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <TrendingUp className="h-4 w-4 text-green-600" />
               <span>This product has sold {product.sold} units on our platform</span>
