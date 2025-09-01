@@ -59,7 +59,7 @@ export interface ResellerPartnership {
   joinedAt: Date
 }
 
-export interface PayoutRequest {
+export interface BrandPayoutRequest {
   id: string
   userId: string
   userType: 'reseller' | 'brand'
