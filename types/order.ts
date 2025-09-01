@@ -13,6 +13,8 @@ export interface OrderItem {
   price: number // Reseller's selling price
   basePrice: number // Brand's base price
   commission: number // Commission amount
+  communityCommission?: number // Community share commission
+  referrerCommission?: number // Referrer commission
   total: number
 }
 
@@ -28,12 +30,23 @@ export interface Order {
   shippingCost: number
   total: number
   totalCommission: number
+  totalCommunityCommission?: number
+  totalReferrerCommission?: number
   status: OrderStatus
   paymentStatus: PaymentStatus
   paymentMethod?: PaymentMethod
   paymentProof?: string
   trackingNumber?: string
   notes?: string
+  shareSource?: {
+    type: 'direct' | 'qr_voucher' | 'link_share' | 'social_share'
+    referralCode?: string
+    communityId?: string
+    sharedBy?: string
+    platform?: string
+  }
+  voucherId?: string
+  isVoucherRedemption?: boolean
   createdAt: Date
   updatedAt: Date
 }
@@ -49,9 +62,13 @@ export interface DashboardStats {
   totalOrders: number
   totalRevenue: number
   totalCommission: number
+  totalCommunityEarnings?: number
+  totalReferralEarnings?: number
   pendingOrders: number
   completedOrders: number
   totalProducts: number
   viewsToday: number
   conversionRate: number
+  walletBalance?: number
+  pendingPayouts?: number
 }

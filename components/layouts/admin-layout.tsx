@@ -13,7 +13,9 @@ import {
   Settings,
   LogOut,
   Menu,
-  X
+  X,
+  Wallet,
+  Users
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
@@ -25,6 +27,8 @@ const navigation = [
   { name: 'Catalog', href: '/admin/catalog', icon: ShoppingBag },
   { name: 'My Products', href: '/admin/products', icon: Package },
   { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
+  { name: 'Community', href: '/admin/community', icon: Users },
+  { name: 'Wallet', href: '/admin/wallet', icon: Wallet },
   { name: 'Payouts', href: '/admin/payouts', icon: DollarSign },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
   { name: 'Settings', href: '/admin/settings', icon: Settings },

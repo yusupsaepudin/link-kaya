@@ -1,254 +1,429 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { 
-  DollarSign, 
-  Download,
-  Calendar,
-  CheckCircle,
-  Clock,
-  AlertCircle
-} from "lucide-react"
-import { formatCurrency } from "@/lib/utils/formatters"
-import { format } from "date-fns"
+import { useState } from 'react'
+import { Check, X, Clock, AlertCircle, DollarSign, CreditCard, FileText, Search } from 'lucide-react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { formatRupiah } from '@/lib/utils'
+import { useWalletStore } from '@/lib/stores/useWalletStore'
+import { PayoutRequest } from '@/types/user'
+import { toast } from 'sonner'
 
-// Mock payout data
-const mockPayouts = [
-  {
-    id: "1",
-    amount: 250000,
-    status: "completed",
-    date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-    ordersCount: 5,
-    bankAccount: "BCA ****7890"
-  },
-  {
-    id: "2",
-    amount: 350000,
-    status: "completed",
-    date: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-    ordersCount: 8,
-    bankAccount: "BCA ****7890"
-  },
-  {
-    id: "3",
-    amount: 175000,
-    status: "pending",
-    date: new Date(),
-    ordersCount: 4,
-    bankAccount: "BCA ****7890"
-  }
-]
+export default function PayoutsPage() {
+  const [selectedPayout, setSelectedPayout] = useState<PayoutRequest | null>(null)
+  const [showApprovalDialog, setShowApprovalDialog] = useState(false)
+  const [showRejectionDialog, setShowRejectionDialog] = useState(false)
+  const [adminNotes, setAdminNotes] = useState('')
+  const [rejectionReason, setRejectionReason] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
+  
+  const { payoutRequests, updatePayoutStatus } = useWalletStore()
 
-export default function AdminPayoutsPage() {
-  const [selectedTab, setSelectedTab] = useState("overview")
+  // Filter payouts by status
+  const pendingPayouts = payoutRequests.filter(p => p.status === 'pending')
+  const approvedPayouts = payoutRequests.filter(p => p.status === 'approved')
+  const processingPayouts = payoutRequests.filter(p => p.status === 'processing')
+  const completedPayouts = payoutRequests.filter(p => p.status === 'completed')
+  const rejectedPayouts = payoutRequests.filter(p => p.status === 'rejected')
 
-  const stats = {
-    totalEarnings: 775000,
-    pendingPayout: 175000,
-    lastPayout: 250000,
-    nextPayoutDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+  // Calculate statistics
+  const totalPendingAmount = pendingPayouts.reduce((sum, p) => sum + p.amount, 0)
+  const totalProcessingAmount = processingPayouts.reduce((sum, p) => sum + p.amount, 0)
+  const totalCompletedAmount = completedPayouts.reduce((sum, p) => sum + p.amount, 0)
+
+  const handleApprove = () => {
+    if (selectedPayout) {
+      updatePayoutStatus(selectedPayout.id, 'approved', adminNotes)
+      toast.success('Payout request approved')
+      setShowApprovalDialog(false)
+      setSelectedPayout(null)
+      setAdminNotes('')
+    }
   }
 
-  const monthlyEarnings = [
-    { month: "Jan", amount: 450000 },
-    { month: "Feb", amount: 525000 },
-    { month: "Mar", amount: 775000 }
-  ]
+  const handleReject = () => {
+    if (selectedPayout) {
+      updatePayoutStatus(selectedPayout.id, 'rejected', rejectionReason)
+      toast.error('Payout request rejected')
+      setShowRejectionDialog(false)
+      setSelectedPayout(null)
+      setRejectionReason('')
+    }
+  }
+
+  const handleMarkAsProcessing = (payout: PayoutRequest) => {
+    updatePayoutStatus(payout.id, 'processing')
+    toast.info('Payout marked as processing')
+  }
+
+  const handleMarkAsCompleted = (payout: PayoutRequest) => {
+    updatePayoutStatus(payout.id, 'completed')
+    toast.success('Payout marked as completed')
+  }
+
+  const filteredPayouts = (payouts: PayoutRequest[]) => {
+    if (!searchTerm) return payouts
+    return payouts.filter(p => 
+      p.userId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.accountDetails.accountName?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  }
+
+  const PayoutCard = ({ payout }: { payout: PayoutRequest }) => (
+    <Card>
+      <CardContent className="pt-6">
+        <div className="space-y-4">
+          <div className="flex justify-between items-start">
+            <div className="space-y-1">
+              <p className="font-semibold">{formatRupiah(payout.amount)}</p>
+              <p className="text-sm text-muted-foreground">
+                {payout.accountDetails.accountName}
+              </p>
+            </div>
+            <Badge variant={
+              payout.status === 'completed' ? 'default' :
+              payout.status === 'approved' ? 'secondary' :
+              payout.status === 'processing' ? 'outline' :
+              payout.status === 'rejected' ? 'destructive' : 'secondary'
+            }>
+              {payout.status}
+            </Badge>
+          </div>
+          
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Method</span>
+              <span className="font-medium">{payout.method}</span>
+            </div>
+            {payout.method === 'bank' ? (
+              <>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Bank</span>
+                  <span className="font-medium">{payout.accountDetails.bankName}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Account</span>
+                  <span className="font-medium font-mono">{payout.accountDetails.accountNumber}</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">E-Wallet</span>
+                  <span className="font-medium">{payout.accountDetails.ewalletType}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Phone</span>
+                  <span className="font-medium">{payout.accountDetails.accountNumber}</span>
+                </div>
+              </>
+            )}
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Requested</span>
+              <span className="font-medium">
+                {new Date(payout.requestedAt).toLocaleDateString()}
+              </span>
+            </div>
+          </div>
+          
+          {payout.adminNotes && (
+            <Alert>
+              <FileText className="h-4 w-4" />
+              <AlertDescription>
+                Admin Notes: {payout.adminNotes}
+              </AlertDescription>
+            </Alert>
+          )}
+          
+          {payout.rejectionReason && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                Rejection Reason: {payout.rejectionReason}
+              </AlertDescription>
+            </Alert>
+          )}
+          
+          <div className="flex gap-2">
+            {payout.status === 'pending' && (
+              <>
+                <Button
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => {
+                    setSelectedPayout(payout)
+                    setShowApprovalDialog(true)
+                  }}
+                >
+                  <Check className="h-4 w-4 mr-2" />
+                  Approve
+                </Button>
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  className="flex-1"
+                  onClick={() => {
+                    setSelectedPayout(payout)
+                    setShowRejectionDialog(true)
+                  }}
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Reject
+                </Button>
+              </>
+            )}
+            {payout.status === 'approved' && (
+              <Button
+                size="sm"
+                className="w-full"
+                onClick={() => handleMarkAsProcessing(payout)}
+              >
+                <Clock className="h-4 w-4 mr-2" />
+                Mark as Processing
+              </Button>
+            )}
+            {payout.status === 'processing' && (
+              <Button
+                size="sm"
+                className="w-full"
+                onClick={() => handleMarkAsCompleted(payout)}
+              >
+                <Check className="h-4 w-4 mr-2" />
+                Mark as Completed
+              </Button>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Payouts</h1>
-        <Button variant="outline">
-          <Download className="mr-2 h-4 w-4" />
-          Export Statement
-        </Button>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Payout Management</h1>
+          <p className="text-muted-foreground">Review and approve payout requests</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search by user or account name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-64"
+          />
+        </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Earnings</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(stats.totalEarnings)}</div>
-            <p className="text-xs text-muted-foreground">
-              All time
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Payout</CardTitle>
+            <CardTitle className="text-sm font-medium">Pending Payouts</CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(stats.pendingPayout)}</div>
+            <div className="text-2xl font-bold">{pendingPayouts.length}</div>
             <p className="text-xs text-muted-foreground">
-              Processing
+              Total: {formatRupiah(totalPendingAmount)}
             </p>
           </CardContent>
         </Card>
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Last Payout</CardTitle>
-            <CheckCircle className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Processing</CardTitle>
+            <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(stats.lastPayout)}</div>
+            <div className="text-2xl font-bold">{processingPayouts.length}</div>
             <p className="text-xs text-muted-foreground">
-              7 days ago
+              Total: {formatRupiah(totalProcessingAmount)}
             </p>
           </CardContent>
         </Card>
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Next Payout</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Completed</CardTitle>
+            <Check className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {format(stats.nextPayoutDate, "dd MMM")}
-            </div>
+            <div className="text-2xl font-bold">{completedPayouts.length}</div>
             <p className="text-xs text-muted-foreground">
-              In 7 days
+              Total: {formatRupiah(totalCompletedAmount)}
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Rejected</CardTitle>
+            <X className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{rejectedPayouts.length}</div>
+            <p className="text-xs text-muted-foreground">
+              This month
             </p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Main Content */}
-      <Card>
-        <CardHeader>
-          <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-            <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="history">Payout History</TabsTrigger>
-              <TabsTrigger value="settings">Bank Settings</TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </CardHeader>
-        <CardContent>
-          <Tabs value={selectedTab}>
-            <TabsContent value="overview" className="space-y-6">
-              {/* Earnings Chart */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Monthly Earnings</h3>
-                <div className="space-y-4">
-                  {monthlyEarnings.map((month) => (
-                    <div key={month.month} className="flex items-center gap-4">
-                      <span className="w-12 text-sm text-muted-foreground">{month.month}</span>
-                      <div className="flex-1">
-                        <div className="h-8 bg-muted rounded-lg overflow-hidden">
-                          <div 
-                            className="h-full bg-primary"
-                            style={{ width: `${(month.amount / 800000) * 100}%` }}
-                          />
-                        </div>
-                      </div>
-                      <span className="text-sm font-medium">{formatCurrency(month.amount)}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+      <Tabs defaultValue="pending" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="pending">
+            Pending ({pendingPayouts.length})
+          </TabsTrigger>
+          <TabsTrigger value="approved">
+            Approved ({approvedPayouts.length})
+          </TabsTrigger>
+          <TabsTrigger value="processing">
+            Processing ({processingPayouts.length})
+          </TabsTrigger>
+          <TabsTrigger value="completed">
+            Completed
+          </TabsTrigger>
+          <TabsTrigger value="rejected">
+            Rejected
+          </TabsTrigger>
+        </TabsList>
 
-              {/* Payout Schedule */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Payout Schedule</h3>
-                <div className="bg-muted p-4 rounded-lg">
-                  <div className="flex items-start gap-3">
-                    <AlertCircle className="h-5 w-5 text-muted-foreground mt-0.5" />
-                    <div className="space-y-1">
-                      <p className="text-sm">
-                        Payouts are processed automatically every <strong>Monday</strong>
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        Minimum payout amount: {formatCurrency(100000)}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        Funds typically arrive within 1-2 business days
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
+        <TabsContent value="pending" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {filteredPayouts(pendingPayouts).map((payout) => (
+              <PayoutCard key={payout.id} payout={payout} />
+            ))}
+          </div>
+          {pendingPayouts.length === 0 && (
+            <Card>
+              <CardContent className="text-center py-8">
+                <p className="text-muted-foreground">No pending payout requests</p>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
 
-            <TabsContent value="history" className="space-y-4">
-              {mockPayouts.map((payout) => (
-                <div key={payout.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      payout.status === "completed" ? "bg-green-100 dark:bg-green-900/20" : "bg-yellow-100 dark:bg-yellow-900/20"
-                    }`}>
-                      {payout.status === "completed" ? (
-                        <CheckCircle className="h-5 w-5 text-green-600" />
-                      ) : (
-                        <Clock className="h-5 w-5 text-yellow-600" />
-                      )}
-                    </div>
-                    <div>
-                      <p className="font-medium">{formatCurrency(payout.amount)}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {payout.ordersCount} orders • {format(payout.date, "dd MMM yyyy")}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm text-muted-foreground">{payout.bankAccount}</span>
-                    <Badge variant={payout.status === "completed" ? "default" : "secondary"}>
-                      {payout.status === "completed" ? "Completed" : "Pending"}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
-            </TabsContent>
+        <TabsContent value="approved" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {filteredPayouts(approvedPayouts).map((payout) => (
+              <PayoutCard key={payout.id} payout={payout} />
+            ))}
+          </div>
+        </TabsContent>
 
-            <TabsContent value="settings" className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Bank Account</h3>
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">BCA</p>
-                        <p className="text-sm text-muted-foreground">****7890</p>
-                        <p className="text-sm text-muted-foreground">Sarah Kusuma</p>
-                      </div>
-                      <Badge variant="outline" className="text-green-600">
-                        <CheckCircle className="mr-1 h-3 w-3" />
-                        Verified
-                      </Badge>
-                    </div>
-                    <Button variant="outline" className="mt-4">
-                      Change Bank Account
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
+        <TabsContent value="processing" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {filteredPayouts(processingPayouts).map((payout) => (
+              <PayoutCard key={payout.id} payout={payout} />
+            ))}
+          </div>
+        </TabsContent>
 
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Tax Information</h3>
-                <Card>
-                  <CardContent className="p-6">
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Add your tax information to ensure compliance with local regulations.
-                    </p>
-                    <Button variant="outline">Add Tax Info</Button>
-                  </CardContent>
-                </Card>
+        <TabsContent value="completed" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {filteredPayouts(completedPayouts).map((payout) => (
+              <PayoutCard key={payout.id} payout={payout} />
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="rejected" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {filteredPayouts(rejectedPayouts).map((payout) => (
+              <PayoutCard key={payout.id} payout={payout} />
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
+
+      {/* Approval Dialog */}
+      <Dialog open={showApprovalDialog} onOpenChange={setShowApprovalDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Approve Payout Request</DialogTitle>
+            <DialogDescription>
+              Confirm approval for this payout request
+            </DialogDescription>
+          </DialogHeader>
+          {selectedPayout && (
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <p className="font-semibold">Amount: {formatRupiah(selectedPayout.amount)}</p>
+                <p className="text-sm text-muted-foreground">
+                  To: {selectedPayout.accountDetails.accountName}
+                </p>
               </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+              <div className="space-y-2">
+                <Label htmlFor="admin-notes">Admin Notes (Optional)</Label>
+                <Textarea
+                  id="admin-notes"
+                  placeholder="Add any notes about this approval..."
+                  value={adminNotes}
+                  onChange={(e) => setAdminNotes(e.target.value)}
+                  rows={3}
+                />
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowApprovalDialog(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleApprove}>
+              Approve Payout
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Rejection Dialog */}
+      <Dialog open={showRejectionDialog} onOpenChange={setShowRejectionDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Reject Payout Request</DialogTitle>
+            <DialogDescription>
+              Provide a reason for rejecting this payout request
+            </DialogDescription>
+          </DialogHeader>
+          {selectedPayout && (
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <p className="font-semibold">Amount: {formatRupiah(selectedPayout.amount)}</p>
+                <p className="text-sm text-muted-foreground">
+                  To: {selectedPayout.accountDetails.accountName}
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="rejection-reason">Rejection Reason</Label>
+                <Textarea
+                  id="rejection-reason"
+                  placeholder="Explain why this payout is being rejected..."
+                  value={rejectionReason}
+                  onChange={(e) => setRejectionReason(e.target.value)}
+                  rows={3}
+                  required
+                />
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowRejectionDialog(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={handleReject} disabled={!rejectionReason}>
+              Reject Payout
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

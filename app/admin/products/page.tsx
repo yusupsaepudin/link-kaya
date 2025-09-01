@@ -15,7 +15,8 @@ import {
   TrendingUp,
   Eye,
   Edit,
-  Trash2
+  Trash2,
+  Share2
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -28,11 +29,14 @@ import { formatCurrency } from "@/lib/utils/formatters"
 import { getResellerProducts } from "@/lib/mock"
 import { useUserStore } from "@/lib/stores/useUserStore"
 import { toast } from "sonner"
+import { ShareProductModal } from "@/components/features/community/ShareProductModal"
 
 export default function AdminProductsPage() {
   const currentUser = useUserStore((state) => state.currentUser)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedTab, setSelectedTab] = useState("active")
+  const [shareModalOpen, setShareModalOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState<any>(null)
 
   // Get reseller's products
   const resellerProducts = currentUser ? getResellerProducts(currentUser.id) : []
@@ -47,6 +51,17 @@ export default function AdminProductsPage() {
 
   const handleRemoveProduct = (_productId: string) => {
     toast.success("Product removed from your store")
+  }
+
+  const handleShareProduct = (resellerProduct: any) => {
+    setSelectedProduct({
+      id: resellerProduct.productId,
+      name: resellerProduct.product?.name || '',
+      description: resellerProduct.product?.description || '',
+      images: resellerProduct.product?.images || [],
+      sellingPrice: resellerProduct.sellingPrice
+    })
+    setShareModalOpen(true)
   }
 
   const stats = {
@@ -208,6 +223,10 @@ export default function AdminProductsPage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => handleShareProduct(resellerProduct)}>
+                            <Share2 className="mr-2 h-4 w-4" />
+                            Share Product
+                          </DropdownMenuItem>
                           <DropdownMenuItem>
                             <Edit className="mr-2 h-4 w-4" />
                             Edit Pricing
@@ -271,6 +290,18 @@ export default function AdminProductsPage() {
           </Tabs>
         </CardContent>
       </Card>
+
+      {selectedProduct && currentUser && (
+        <ShareProductModal
+          isOpen={shareModalOpen}
+          onClose={() => {
+            setShareModalOpen(false)
+            setSelectedProduct(null)
+          }}
+          product={selectedProduct}
+          resellerId={currentUser.id}
+        />
+      )}
     </div>
   )
 }
